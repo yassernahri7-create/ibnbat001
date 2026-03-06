@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ibn Batouta Web | Agence de Communication Digitale</title>
+  <meta name="description"
+    content="Ibn Batouta Web — votre agence partenaire pour une croissance digitale durable. Sites web, réseaux sociaux, SEO, design graphique." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <!-- ═══ TOP UTILITY BAR ═══ -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="top-left">
+        <svg class="top-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+          <polyline points="17 6 23 6 23 12"></polyline>
+        </svg>
+        <div>
+          <span class="top-label" data-i18n="top_income">Revenus générés pour nos clients</span>
+          <strong class="counter">2,120,240,443</strong>
+        </div>
+      </div>
+      <div class="top-right">
+        <div class="top-socials">
+          <a href="https://wa.me/212717430045" target="_blank" rel="noopener" class="top-social-link wa wa-link"><svg
+              viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+              <path
+                d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.832-1.438A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a8 8 0 01-4.243-1.214l-.252-.149-2.868.852.852-2.868-.175-.277A7.96 7.96 0 014 12a8 8 1116 0 8 8 0 01-8 8z" />
+            </svg></a>
+          <a href="https://www.instagram.com/websolution0101" target="_blank" rel="noopener"
+            class="top-social-link ig ig-link"><svg viewBox="0 0 24 24" width="18" height="18" fill="none"
+              stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg></a>
+          <a href="https://www.facebook.com/profile.php?id=61586238653875&rdid=1D0ZzMhMqH5WDNOY&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1DngB2VjkQ%2F#"
+            target="_blank" rel="noopener" class="top-social-link fb fb-link"><svg viewBox="0 0 24 24" width="18"
+              height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg></a>
+        </div>
+        <div class="lang-switcher">
+          <button class="lang-btn active" data-lang="fr">FR</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn" data-lang="ar">AR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PROMO BANNER (admin toggle) ═══ -->
+  <div id="promoBanner" class="promo-banner"></div>
+
+  <!-- ═══ MAIN NAV ═══ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top">
+        <div class="logo-wrapper">
+          <img src="assets/brand/ibn-batouta-logo.svg" alt="Ibn Batouta Web Logo" class="main-logo-img animated-logo">
+        </div>
+        <span class="brand-text">Ibn Batouta Web</span>
+      </a>
+      <nav class="main-nav" id="mainNav">
+        <a href="#top" class="active" data-i18n="nav_home">ACCUEIL</a>
+        <a href="#about" data-i18n="nav_about">À PROPOS DE NOUS</a>
+        <a href="#services" data-i18n="nav_services">SERVICES</a>
+        <a href="#contact" data-i18n="nav_contact">CONTACT</a>
+      </nav>
+      <div class="header-actions">
+        <a href="#contact" class="btn btn-blue" data-i18n="btn_contact">CONTACTEZ-NOUS <span>&rarr;</span></a>
+      </div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">&#9776;</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" id="top">
+      <div class="hero-inner">
+        <div class="hero-text">
+          <h1 class="hero-title" data-i18n="hero_title">Ibn Batouta Web<br>Agence de<br>communication</h1>
+          <p class="hero-desc" data-i18n="hero_desc">Vous recherchez une Agence web capable de valoriser votre image de
+            marque et d'optimiser
+            votre présence en ligne ? Notre équipe vous accompagne dans la création de stratégies de communication
+            efficaces, adaptées à vos objectifs et à votre marché local.</p>
+          <div class="hero-form-area">
+            <p class="hero-form-label" data-i18n="hero_form_label">REMPLISSEZ LE FORMULAIRE CI-DESSOUS POUR ÊTRE
+              CONTACTÉ</p>
+            <form class="hero-mini-form" id="heroMiniForm">
+              <input type="tel" id="heroPhone" placeholder="Votre numéro de téléphone *" required>
+              <button type="submit" class="btn btn-blue btn-small" data-i18n="hero_form_btn">JE COMMENCE</button>
+            </form>
+            <span class="form-disclaimer" data-i18n="hero_form_disclaimer">En soumettant, vous serez redirigé vers
+              WhatsApp pour nous contacter
+              directement</span>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <!-- Dashboard mockup cards -->
+          <div class="dash-card dash-main">
+            <p class="dash-label">Facebook Marketing Campaign</p>
+            <div class="dash-donut">
+              <svg viewBox="0 0 120 120" width="120" height="120">
+                <circle cx="60" cy="60" r="52" fill="none" stroke="#eee" stroke-width="12" />
+                <circle cx="60" cy="60" r="52" fill="none" stroke="#2563eb" stroke-width="12" stroke-dasharray="225 327"
+                  stroke-dashoffset="-80" stroke-linecap="round" />
+              </svg>
+              <div class="donut-text"><strong>690</strong><span>Goal: 1000</span></div>
+            </div>
+            <div class="dash-legend"><span class="dot-blue"></span> Clicks: 690 &nbsp; <span class="dot-gray"></span>
+              Goal: 1000</div>
+          </div>
+          <div class="dash-card dash-small">
+            <p class="dash-price">$ 42,600</p>
+            <p class="dash-sub">Budget: $5,000</p>
+            <div class="dash-chart">
+              <svg viewBox="0 0 180 60" preserveAspectRatio="none" width="100%" height="50">
+                <polyline fill="none" stroke="#2563eb" stroke-width="2"
+                  points="0,50 20,42 40,45 60,30 80,35 100,20 120,25 140,10 160,15 180,5" />
+                <polyline fill="none" stroke="#ffb74d" stroke-width="2" stroke-dasharray="4 3"
+                  points="0,55 20,48 40,50 60,40 80,42 100,35 120,38 140,30 160,33 180,28" />
+              </svg>
+            </div>
+          </div>
+          <div class="dash-card dash-leads">
+            <p class="dash-label">Generated Traffic &amp; Leads</p>
+            <div class="leads-big">61%</div>
+            <p class="dash-sub">Average annual grow rate</p>
+          </div>
+        </div>
+      </div>
+      <!-- Decorative dots -->
+      <div class="hero-dots"></div>
+    </section>
+
+    <!-- ═══ PARTNERS STRIP ═══ -->
+    <section class="partners">
+      <div class="partners-inner">
+        <h3 class="partners-title">NOS<br>PARTENAIRES</h3>
+        <div class="partners-logos-vibrant">
+          <div class="vibrant-partner-card">
+            <div class="vp-icon-bg gc">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="#4285f4">
+                <path
+                  d="M19.98 10.41C19.78 5.76 15.89 2 11 2 6.86 2 3.32 4.6 2.27 8.35 1 9.3 0 10.85 0 13c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5 0-2.48-1.81-4.52-4.02-4.59zM19 16H5c-1.65 0-3-1.35-3-3 0-1.55 1.16-2.83 2.68-2.98l.7-.06.26-.64A7.005 7.005 0 0 1 11 4c3.31 0 6.07 2.31 6.84 5.48l.21 1 .99.11C20.15 10.74 21 11.75 21 13c0 1.65-1.35 3-3 3z" />
+              </svg>
+            </div>
+            <div class="vp-text">
+              <strong>Google Cloud</strong>
+              <span>Partner</span>
+            </div>
+          </div>
+
+          <div class="vibrant-partner-card">
+            <div class="vp-icon-bg mb">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="#0064e0">
+                <path
+                  d="M21.5 6h-19c-1.38 0-2.5 1.12-2.5 2.5v7c0 1.38 1.12 2.5 2.5 2.5h19c1.38 0 2.5-1.12 2.5-2.5v-7c0-1.38-1.12-2.5-2.5-2.5zm.5 9.5c0 .28-.22.5-.5.5h-19c-.28 0-.5-.22-.5-.5v-7c0-.28.22-.5.5-.5h19c.28 0 .5.22.5.5v7zM15 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM9 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+              </svg>
+            </div>
+            <div class="vp-text">
+              <strong>Meta Business</strong>
+              <span>Partners</span>
+            </div>
+          </div>
+
+          <div class="vibrant-partner-card">
+            <div class="vp-icon-bg gp">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="#ea4335">
+                <path
+                  d="M12.5 1.5c-5.8 0-10.5 4.7-10.5 10.5s4.7 10.5 10.5 10.5c5.3 0 10.1-3.9 10.4-9.2v-1.3h-10.4v3.5h6.4c-.6 2.4-2.8 4.2-5.4 4.2-3.1 0-5.6-2.5-5.6-5.6s2.5-5.6 5.6-5.6c1.4 0 2.7.5 3.7 1.4l2.5-2.5c-1.7-1.6-3.9-2.5-6.2-2.5z" />
+              </svg>
+            </div>
+            <div class="vp-text">
+              <strong>Google</strong>
+              <span>Partner</span>
+            </div>
+          </div>
+
+          <div class="vibrant-partner-card">
+            <div class="vp-icon-bg sh">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="#95bf47">
+                <path
+                  d="M19.4 6.7L16 2.4l-11.6 3L3 18.2 12.1 22l8.8-4.7-1.5-10.6zM6.5 6.9l8.6-2L14.4 7H7l-.5-.1zm-1.8 1.4L11.8 8v10.5l-6-3.1-1.1-7.1zM13.2 8h2.3l.5 6-4-1V8v-.1l1.2.1z" />
+              </svg>
+            </div>
+            <div class="vp-text">
+              <strong>Shopify</strong>
+              <span>Partner</span>
+            </div>
+          </div>
+
+          <div class="vibrant-partner-card">
+            <div class="vp-icon-bg tk">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="#000000">
+                <path
+                  d="M19.6 8.5c-.2 0-.3-.1-.5-.1-1.4-.2-2.5-1-3.2-2.2-.4-.7-.6-1.5-.6-2.2v-.8h-3V14c0 1.9-1.5 3.5-3.5 3.5S5.3 16 5.3 14 6.8 10.5 8.7 10.5c.3 0 .7.1 1 .2v3.1c-.2-.1-.5-.2-.9-.2-.5 0-.9.4-.9.9s.4.9.9.9c.7 0 1.2-.5 1.5-1.2l.1-9.9h3.3c.4 2.2 2.1 3.9 4.3 4.2v2.8H19.6z" />
+              </svg>
+            </div>
+            <div class="vp-text">
+              <strong>TikTok</strong>
+              <span>Marketing Partners</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ SCROLLING SERVICES MARQUEE ═══ -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>RÉSEAUX SOCIAUX</span><span>•</span>
+        <span>DESIGN GRAPHIQUE</span><span>•</span>
+        <span>BRANDING</span><span>•</span>
+        <span>GESTION DE COMMUNAUTÉ</span><span>•</span>
+        <span>GOOGLE ADS</span><span>•</span>
+        <span>FACEBOOK ADS</span><span>•</span>
+        <span>SEO</span><span>•</span>
+        <span>CRÉATION SITES WEB</span><span>•</span>
+        <!-- duplicate for seamless loop -->
+        <span>RÉSEAUX SOCIAUX</span><span>•</span>
+        <span>DESIGN GRAPHIQUE</span><span>•</span>
+        <span>BRANDING</span><span>•</span>
+        <span>GESTION DE COMMUNAUTÉ</span><span>•</span>
+        <span>GOOGLE ADS</span><span>•</span>
+        <span>FACEBOOK ADS</span><span>•</span>
+        <span>SEO</span><span>•</span>
+        <span>CRÉATION SITES WEB</span><span>•</span>
+      </div>
+    </div>
+
+    <!-- ═══ QUI SOMMES NOUS ═══ -->
+    <section class="section about-section" id="about">
+      <div class="about-inner">
+        <div class="about-left">
+          <div class="about-logo-block">
+            <span class="brand-text brand-lg">Ibn Batouta Web</span>
+            <p class="about-agency-label">PARTENAIRE DE DIGITALISATION LOCALE</p>
+          </div>
+        </div>
+        <div class="about-right">
+          <h2 class="about-heading" data-i18n="about_title">QUI SOMMES <span class="circled">NOUS</span></h2>
+          <p data-i18n="about_p1"><strong class="blue-text">Ibn Batouta Web</strong> est votre partenaire de confiance
+            pour
+            la transformation digitale des commerces de proximité. Notre mission est d'aider les entrepreneurs locaux à
+            franchir le pas vers le monde du numérique tout en valorisant leur savoir-faire.</p>
+          <p data-i18n="about_p2"><strong class="blue-text">Prêts à franchir le pas ?</strong> Notre équipe dédiée
+            accompagne les commerçants, artisans et PME pour booster leur visibilité locale, attirer de nouveaux clients
+            et simplifier leurs interactions quotidiennes grâce à des solutions technologiques accessibles.</p>
+        </div>
+      </div>
+      <!-- Timeline dots -->
+      <div class="timeline">
+        <div class="timeline-line"></div>
+        <div class="timeline-dot active"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-dot"></div>
+      </div>
+      <div class="timeline-items">
+        <div class="timeline-card" data-i18n="tm_1">Nos clients ont augmenté leur visibilité en ligne de 50%.</div>
+        <div class="timeline-card" data-i18n="tm_2">Grâce à notre accompagnement, leurs ventes en ligne ont progressé de
+          80%.</div>
+        <div class="timeline-card" data-i18n="tm_3">Les campagnes menées ont généré une hausse de 40 % de l'engagement
+          sur les réseaux
+          sociaux.</div>
+        <div class="timeline-card" data-i18n="tm_4">Par ailleurs, nos stratégies SEO leur ont permis d'atteindre la
+          première page de
+          Google pour plus de 15 mots-clés.</div>
+      </div>
+    </section>
+
+    <!-- ═══ NOS SERVICES ═══ -->
+    <section class="section services-section" id="services">
+      <div class="section-head text-center">
+        <h2 data-i18n="services_title">Nos solutions pour<br>votre commerce local</h2>
+        <span class="overline" data-i18n="services_overline">NOS SERVICES</span>
+      </div>
+      <div class="services-container">
+        <div class="services-tabs" id="serviceTabs">
+          <!-- Rendered by JS -->
+        </div>
+        <div class="services-content" id="serviceContent">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ WORK / RÉALISATIONS ═══ -->
+    <section class="section work-section" id="work">
+      <div class="section-head text-center">
+        <h2 data-i18n="work_title">Découvrez Nos Réalisations</h2>
+        <p data-i18n="work_desc">Des projets qui ont fait la différence pour nos clients.</p>
+      </div>
+      <div class="grid-3" id="projectsContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- ═══ CONTACT ═══ -->
+    <section class="section contact-section" id="contact">
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h2 data-i18n="contact_title">Prêt à accélérer<br>votre <span class="blue-text">croissance</span> ?</h2>
+          <p data-i18n="contact_desc">Contactez-nous aujourd'hui pour une consultation gratuite et découvrez comment
+            nous pouvons transformer
+            votre présence en ligne.</p>
+          <div class="contact-details">
+            <div class="contact-item">
+              <strong>Téléphone / WhatsApp</strong>
+              <p class="phone-text">+212 717 430 045</p>
+            </div>
+            <div class="contact-socials-list">
+              <a href="https://www.instagram.com/websolution0101" target="_blank"
+                class="social-circle ig ig-link">IG</a>
+              <a href="https://wa.me/212717430045" target="_blank" class="social-circle wa wa-link">WA</a>
+              <a href="https://www.facebook.com/profile.php?id=61586238653875" target="_blank"
+                class="social-circle fb fb-link">FB</a>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form-box">
+          <form id="contactForm" class="contact-form">
+            <div class="field"><input type="text" id="name" required placeholder="Votre Nom Complet"></div>
+            <div class="field"><input type="text" id="contactInfo" required data-i18n-placeholder="contact_info_ph"
+                placeholder="Votre Téléphone / WhatsApp">
+            </div>
+            <div class="field">
+              <select id="bizType">
+                <option value="" disabled selected>De quel service avez-vous besoin ?</option>
+                <option>Communication web et marketing</option>
+                <option>Création de sites web</option>
+                <option>Réseaux sociaux</option>
+                <option>Référencement SEO & SEA</option>
+                <option>Design Graphique</option>
+              </select>
+            </div>
+            <div class="field"><textarea id="message" rows="4" data-i18n-placeholder="contact_msg_ph"
+                placeholder="Parlez-nous de votre projet..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-blue btn-full" data-i18n="contact_btn">OBTENIR UN DEVIS &rarr;</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══ FLOATING WHATSAPP ═══ -->
+  <a href="https://wa.me/212717430045" class="floating-wa" id="floatingWa" target="_blank" rel="noopener">
+    <svg viewBox="0 0 32 32" width="28" height="28" fill="white">
+      <path
+        d="M16.6 29C10.3 29 5 24 5 17.5 5 13.5 7 9.8 10 7.5L8.5 3l4.8 1.4C14.3 4 15.5 3.9 16.6 3.9 23.4 3.9 29 9.6 29 16.5S23.4 29 16.6 29zM16.6 6C10.7 6 5.8 10.9 5.8 16.8c0 2 .5 3.9 1.5 5.5l-2 6 6-2c1.6 1 3.5 1.5 5.5 1.5 5.9 0 10.7-4.8 10.7-10.7S22.5 6 16.6 6zm5.8 14.8c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-.9 1.2-.2.2-.4.3-.7.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.2-.6.1-.1.3-.4.5-.5.1-.2.2-.3.3-.5.1-.2.1-.3 0-.5s-.7-1.7-1-2.3c-.3-.6-.6-.5-.8-.5H12c-.3 0-.7.1-1.1.5-.3.4-1.3 1.3-1.3 3.1s1.3 3.6 1.5 3.9c.2.3 2.6 4 6.3 5.6 2.5 1 3.4 1 4.6.9 1.3-.1 2.6-1.1 3-2.1.3-1 .3-1.9.2-2.1-.1-.3-.3-.4-.6-.5z">
+      </path>
+    </svg>
+  </a>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h3><span class="brand-text">Ibn Batouta Web</span></h3>
+        <p data-i18n="footer_desc">Partenaire de la transformation digitale locale, nous aidons les commerces à
+          s'épanouir dans le monde numérique.</p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="nav_contact">Contact</h4>
+        <p>Tél: <span class="phone-text">+212 717 430 045</span></p>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="footer_follow">Suivez-nous</h4>
+        <div class="social-links">
+          <a href="https://www.instagram.com/websolution0101" target="_blank" class="ig-link" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61586238653875" target="_blank" class="fb-link"
+            aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footer_rights">&copy; 2026 Ibn Batouta Web. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

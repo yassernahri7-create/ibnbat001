@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" role="img" aria-label="WebSolution Logo">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#021b38" />
+      <stop offset="100%" stop-color="#04305f" />
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f6e0c4" />
+      <stop offset="100%" stop-color="#e3c9a8" />
+    </linearGradient>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="5" result="b" />
+      <feMerge>
+        <feMergeNode in="b" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+    <style>
+      .ring {
+        stroke-dasharray: 900;
+        stroke-dashoffset: 0;
+        animation: ringSpin 8s linear infinite;
+        transform-origin: 210px 165px;
+      }
+      .wing {
+        transform-origin: 238px 146px;
+        animation: flap 2.6s ease-in-out infinite;
+      }
+      .shine {
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+      @keyframes ringSpin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      @keyframes flap {
+        0%, 100% { transform: rotate(0deg) translateY(0px); }
+        50% { transform: rotate(-6deg) translateY(-4px); }
+      }
+      @keyframes pulse {
+        0%, 100% { opacity: 0.9; }
+        50% { opacity: 1; }
+      }
+    </style>
+  </defs>
+
+  <rect width="420" height="420" rx="34" fill="url(#bg)" />
+
+  <g class="shine" filter="url(#glow)">
+    <circle class="ring" cx="210" cy="165" r="112" fill="none" stroke="url(#gold)" stroke-width="12" />
+    <text x="136" y="194" font-family="Sora,Arial,sans-serif" font-size="72" font-weight="700" fill="url(#gold)">WS</text>
+  </g>
+
+  <g class="wing" fill="url(#gold)">
+    <path d="M238 98c24 11 49 35 61 56-17-4-38-12-58-23-17-9-33-20-45-30 13 2 28 0 42-3z"/>
+    <path d="M208 95c22 13 42 29 57 48-14-5-30-11-45-19-17-10-30-22-40-33 10 2 19 3 28 4z"/>
+    <ellipse cx="302" cy="154" rx="31" ry="24"/>
+    <path d="M329 148l45-7-40 16z"/>
+  </g>
+
+  <text x="210" y="318" text-anchor="middle" font-family="Sora,Arial,sans-serif" font-size="56" font-weight="600" letter-spacing="1" fill="url(#gold)">WeBSoluTiON</text>
+</svg>

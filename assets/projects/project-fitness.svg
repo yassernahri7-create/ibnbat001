@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600">
+  <defs>
+    <linearGradient id="bg6" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2d153d"/>
+      <stop offset="100%" stop-color="#8a4dff"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="600" fill="url(#bg6)"/>
+  <rect x="70" y="70" width="820" height="460" rx="24" fill="#faf8ff"/>
+  <rect x="110" y="120" width="260" height="34" rx="10" fill="#dfd8ff"/>
+  <rect x="110" y="180" width="470" height="14" rx="7" fill="#ebe8ff"/>
+  <rect x="110" y="206" width="420" height="14" rx="7" fill="#ebe8ff"/>
+  <rect x="110" y="250" width="150" height="40" rx="12" fill="#7648e9"/>
+  <rect x="640" y="130" width="210" height="290" rx="18" fill="#e4defd"/>
+  <circle cx="745" cy="275" r="74" fill="#b8a6f8"/>
+  <text x="110" y="350" font-family="Sora,Arial" font-size="44" fill="#41286b">Pulse Gym</text>
+</svg>

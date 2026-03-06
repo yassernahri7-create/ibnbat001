@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ibn Batouta Web Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="admin.css">
+</head>
+
+<body>
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+  <div class="mobile-header">
+    <div class="brand-title" style="margin-bottom:0; padding-left:0; font-size: 1rem;">
+      <img src="assets/brand/ibn-batouta-logo.svg" alt="Logo" style="height:32px;">
+      Ibn Batouta
+    </div>
+    <button class="menu-toggle" id="menuToggle">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="sidebar">
+    <div class="brand-title" style="display:flex; align-items:center; gap:10px;">
+      <img src="assets/brand/ibn-batouta-logo.svg" alt="Logo" style="height:40px; width:auto;">
+      Ibn Batouta Web
+    </div>
+    <button class="nav-btn active" data-target="socials">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M21 12.216c0-4.693-3.815-8.497-8.525-8.497-4.71 0-8.525 3.804-8.525 8.497 0 4.255 3.125 7.784 7.194 8.397v-5.941h-2.166v-2.456h2.166v-1.871c0-2.14 1.282-3.321 3.232-3.321.936 0 1.916.167 1.916.167v2.105h-1.079c-1.063 0-1.393.659-1.393 1.332v1.588h2.378l-.38 2.456h-1.998v5.938c4.066-.615 7.18-4.14 7.18-8.394z" />
+      </svg>
+      Réseaux Sociaux
+    </button>
+    <button class="nav-btn" data-target="packs">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M20 7h-4V5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v2H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zM10 5h4v2h-4V5zm10 14H4V9h16v10z" />
+      </svg>
+      Packs & Plans
+    </button>
+    <button class="nav-btn" data-target="gallery">
+      <svg viewBox="0 0 24 24">
+        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+        <polyline points="21 15 16 10 5 21"></polyline>
+      </svg>
+      Galerie Projets
+    </button>
+    <button class="nav-btn" data-target="security">
+      <svg viewBox="0 0 24 24">
+        <path
+          d="M12 2C9.243 2 7 4.243 7 7v3H6c-1.103 0-2 .897-2 2v8c0 1.103.897 2 2 2h12c1.103 0 2-.897 2-2v-8c0-1.103-.897-2-2-2h-1V7c0-2.757-2.243-5-2.243-5zM9 7c0-1.654 1.346-3 3-3s3 1.346 3 3v3H9V7zm9 13H6v-8h12v8z" />
+        <circle cx="12" cy="16" r="1.5" />
+      </svg>
+      Accès & Sécurité
+    </button>
+
+    <div style="margin-top:auto; padding: 12px; display: flex; flex-direction: column; gap: 8px;">
+      <button class="btn btn-full" id="sideAddBtn">+ Nouveau Plan</button>
+      <button class="btn btn-full btn-outline" id="sideAddGalBtn">+ Nouveau Projet</button>
+      <button class="btn btn-full btn-delete" id="logoutBtn" style="margin-top:8px;">Déconnexion</button>
+    </div>
+  </div>
+
+  <div class="main-content">
+    <h1>Espace d'Administration</h1>
+    <p class="subtitle">Modifiez le contenu de votre site facilement. Les modifications sont instantanées.</p>
+
+    <!-- 1. SOCIALS SECTION -->
+    <div id="socials" class="panel-section active">
+      <div class="card">
+        <div class="card-header">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12 2C6.477 2 2 6.477 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10C22 6.477 17.523 2 12 2zM15.473 14.382c-.298-.149-1.758-.867-2.03-.967-.272-.099-.47-.148-.669.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
+            </svg> WhatsApp & Réseaux</h2>
+        </div>
+        <p style="margin-bottom:16px;">Configurez les numéros et liens où vos clients peuvent vous contacter.</p>
+        <div class="grid-2">
+          <div>
+            <label>Numéro WhatsApp (ex: 212717430045, sans +)</label>
+            <input type="text" id="waNum" placeholder="212717430045">
+          </div>
+          <div>
+            <label>Lien Instagram</label>
+            <input type="text" id="igLink" placeholder="https://instagram.com/websolution0101">
+          </div>
+          <div>
+            <label>Lien Facebook</label>
+            <input type="text" id="fbLink" placeholder="https://facebook.com/votrepage">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. PACKS & SERVICES SECTION -->
+    <div id="packs" class="panel-section">
+      <div class="card">
+        <div class="card-header">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24">
+              <path fill="currentColor"
+                d="M20 7h-4V5c0-1.103-.897-2-2-2h-4c-1.103 0-2 .897-2 2v2H4c-1.103 0-2 .897-2 2v10c0 1.103.897 2 2 2h16c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zM10 5h4v2h-4V5zm10 14H4V9h16v10z" />
+            </svg> Gestion des Packs & Plans</h2>
+          <button class="btn" id="addPackBtn">+ Ajouter un Plan / Pack</button>
+        </div>
+        <p style="margin-bottom:16px;">Créez et modifiez les packs que vous vendez. Les visiteurs pourront les lire en
+          français, anglais et arabe.</p>
+
+        <div id="packsContainer"></div>
+      </div>
+    </div>
+
+    <!-- 3. GALLERY SECTION -->
+    <div id="gallery" class="panel-section">
+      <div class="card">
+        <div class="card-header">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg> Galerie & Bibliothèque</h2>
+          <button class="btn" id="addGalleryBtn">+ Ajouter un Projet (Library)</button>
+        </div>
+        <p style="margin-bottom:16px;">Mettez en valeur vos meilleures réalisations pour construire votre bibliothèque
+          de projets.
+        </p>
+
+        <div id="galleryContainer" class="grid-2"></div>
+      </div>
+    </div>
+
+    <!-- 4. SECURITY SECTION -->
+    <div id="security" class="panel-section">
+      <div class="card">
+        <div class="card-header">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg> Sécurité du Panneau</h2>
+        </div>
+        <p style="margin-bottom:16px;">Changez vos identifiants de connexion pour protéger l'accès à votre panneau
+          d'administration.</p>
+        <div class="grid-2">
+          <div>
+            <label>Nom d'utilisateur Admin</label>
+            <input type="text" id="adminUser" placeholder="admin">
+          </div>
+          <div>
+            <label>Nouveau Mot de Passe</label>
+            <input type="password" id="adminPass" placeholder="••••••••">
+          </div>
+        </div>
+        <div
+          style="background: #fff9db; padding: 12px; border-radius: 8px; border: 1px solid #ffe066; color: #856404; font-size: 0.85rem; display: flex; align-items: center; gap: 10px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
+          </svg>
+          Une fois modifié, vous devrez utiliser ces nouveaux identifiants lors de votre prochaine connexion.
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- /main-content -->
+
+  <div id="toast-container"></div>
+
+  <div class="status-bar">
+    <div class="save-status" id="saveStatus">
+      Prêt à enregistrer. Activez l'auto-sauvegarde en ajoutant des éléments.
+    </div>
+    <div style="display:flex;gap:16px;">
+      <a href="/index.html" target="_blank" class="btn btn-outline" style="text-decoration:none;">🚀 Voir le site</a>
+      <button class="btn" id="saveAllBtn">
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+        Sauvegarder les modifications
+      </button>
+    </div>
+  </div>
+
+  <div id="loginOverlay" style="display:none;">
+    <div class="login-box">
+      <div style="text-align:center; margin-bottom:20px;">
+        <img src="assets/brand/ibn-batouta-logo.svg" alt="Logo" style="height:60px;">
+      </div>
+      <h2>Connexion Admin</h2>
+      <label>Utilisateur</label>
+      <input type="text" id="loginUser" placeholder="Entrez votre nom d'utilisateur">
+      <label>Mot de passe</label>
+      <input type="password" id="loginPass" placeholder="Entrez votre mot de passe">
+      <div id="loginError"
+        style="color: #ef4444; font-size: 0.85rem; margin-bottom: 15px; text-align: center; display: none;">Identifiants
+        incorrects</div>
+      <button class="btn" id="loginSubmit">Entrer dans le Panneau</button>
+    </div>
+  </div>
+
+  <script src="admin.js"></script>
+</body>
+
+</html>

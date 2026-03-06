@@ -1,0 +1,25 @@
+[
+  {
+    "name": "Test User",
+    "phone": "0712345678",
+    "email": "test@example.com",
+    "message": "Hello",
+    "receivedAt": "2026-03-02T19:08:51.830Z"
+  },
+  {
+    "name": "kljhfkjh",
+    "contact": "35454564",
+    "service": "🌐 Site Web Pro",
+    "msg": "jhgjghj",
+    "lang": "fr",
+    "receivedAt": "2026-03-04T17:38:28.424Z"
+  },
+  {
+    "name": "jhjjhdjh",
+    "contact": "9878768768",
+    "service": "🌐 Site Web Pro",
+    "msg": "jhdfjhgdjfg",
+    "lang": "fr",
+    "receivedAt": "2026-03-06T22:55:50.124Z"
+  }
+]

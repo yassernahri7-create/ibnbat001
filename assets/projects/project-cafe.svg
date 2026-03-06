@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#3f2a1e"/>
+      <stop offset="100%" stop-color="#f3a53b"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="600" fill="url(#bg2)"/>
+  <rect x="65" y="70" width="830" height="460" rx="24" fill="#fff9f2"/>
+  <rect x="105" y="120" width="240" height="34" rx="10" fill="#f3ddbe"/>
+  <rect x="105" y="180" width="430" height="14" rx="7" fill="#f6ead9"/>
+  <rect x="105" y="206" width="390" height="14" rx="7" fill="#f6ead9"/>
+  <rect x="620" y="120" width="230" height="360" rx="18" fill="#f0dcc0"/>
+  <circle cx="735" cy="250" r="84" fill="#d5a66f"/>
+  <text x="105" y="340" font-family="Sora,Arial" font-size="44" fill="#4a2d1d">Atlas Cafe</text>
+</svg>

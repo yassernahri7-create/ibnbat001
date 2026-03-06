@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer Globe / Compass Base -->
+  <circle cx="50" cy="50" r="45" fill="none" stroke="#0f172a" stroke-width="1.5" />
+  
+  <!-- Globe Lines -->
+  <g stroke="#0f172a" stroke-width="0.5" fill="none" opacity="0.4">
+    <ellipse cx="50" cy="50" rx="12" ry="45" />
+    <ellipse cx="50" cy="50" rx="28" ry="45" />
+    <line x1="5" y1="50" x2="95" y2="50" />
+    <path d="M15 25 Q50 15 85 25" />
+    <path d="M15 75 Q50 85 85 75" />
+  </g>
+
+  <!-- Compass Star (Background Layer) -->
+  <g fill="url(#goldGradient)" stroke="#0f172a" stroke-width="0.3" filter="url(#glow)">
+    <!-- North Point -->
+    <path d="M50 15 L54 46 L50 43 L46 46 Z" />
+    <!-- East Point -->
+    <path d="M85 50 L54 54 L57 50 L54 46 Z" />
+    <!-- South Point -->
+    <path d="M50 85 L46 54 L50 57 L54 54 Z" />
+    <!-- West Point -->
+    <path d="M15 50 L46 46 L43 50 L46 54 Z" />
+  </g>
+
+  <!-- The "Ibn Batouta" Sailboat Arrow -->
+  <g class="batouta-sail">
+    <!-- Mast / Arrow -->
+    <path d="M30 70 L65 35" stroke="#0f172a" stroke-width="3.5" stroke-linecap="round" fill="none">
+      <animateTransform attributeName="transform" type="translate" values="0,0; 1,-1; 0,0" dur="4s" repeatCount="indefinite" />
+    </path>
+    <!-- Arrow Head -->
+    <path d="M60 38 L68 32 L62 30 Z" fill="#0f172a">
+      <animateTransform attributeName="transform" type="translate" values="0,0; 1,-1; 0,0" dur="4s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Large Sail -->
+    <path d="M48 52 Q65 45 62 38 L55 35 Q50 45 48 52 Z" fill="url(#goldGradient)" stroke="#0f172a" stroke-width="0.5">
+      <animate attributeName="d" 
+        values="M48 52 Q65 45 62 38 L55 35 Q50 45 48 52 Z; M48 52 Q68 42 62 38 L55 35 Q48 48 48 52 Z; M48 52 Q65 45 62 38 L55 35 Q50 45 48 52 Z" 
+        dur="3s" repeatCount="indefinite" />
+    </path>
+    
+    <!-- Small Flag -->
+    <path d="M64 33 L72 31 L64 29" fill="#fbbf24" stroke="#0f172a" stroke-width="0.3">
+      <animate attributeName="d" values="M64 33 L72 31 L64 29; M64 33 L75 33 L64 29; M64 33 L72 31 L64 29" dur="1s" repeatCount="indefinite" />
+    </path>
+  </g>
+
+  <!-- Sparkles -->
+  <g fill="#fbbf24">
+    <circle cx="20" cy="20" r="1">
+      <animate attributeName="opacity" values="0;1;0" dur="2s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="80" cy="30" r="0.8">
+      <animate attributeName="opacity" values="0;1;0" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+
+  <style>
+    @keyframes subtleRotation {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .batouta-sail {
+      transform-origin: 50% 50%;
+      animation: gentleMove 5s ease-in-out infinite;
+    }
+    @keyframes gentleMove {
+      0%, 100% { transform: translate(0,0); }
+      50% { transform: translate(2px, -2px); }
+    }
+  </style>
+</svg>
