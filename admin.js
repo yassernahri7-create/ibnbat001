@@ -252,8 +252,24 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
         <div><label>Lien du projet (optionnel)</label><input type="text" value="${esc(item.link)}" onchange="gallery[${i}].link=this.value; autoSave()"></div>
         
-        <div><label>Images (URLs, une par ligne)</label>
-          <textarea rows="3" onchange="gallery[${i}].images=this.value.split('\n').filter(Boolean); autoSave()">${(item.images || []).join('\n')}</textarea>
+        <div class="upload-area">
+          <label>Images du projet (Choisir depuis l'ordinateur)</label>
+          <div class="file-input-wrapper">
+            <button class="btn btn-primary">📁 Sélectionner des images</button>
+            <input type="file" multiple accept="image/*" onchange="handleImageUpload(${i}, this)">
+          </div>
+          <div class="gal-thumbs-grid" id="galGrid_${i}">
+            ${(item.images || []).map((img, idx) => `
+              <div class="gal-thumb">
+                <img src="${img}" alt="preview">
+                <button class="gal-thumb-del" onclick="removeGalImg(${i}, ${idx})">&times;</button>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div><label>Ou URLs (une par ligne)</label>
+          <textarea rows="3" onchange="gallery[${i}].images=this.value.split('\\n').filter(Boolean); autoSave()">${(item.images || []).join('\n')}</textarea>
         </div>
       </div>
     `).join('');
@@ -265,6 +281,41 @@ document.addEventListener('DOMContentLoaded', async () => {
         autoSave('Projet supprimé avec succès !');
       });
     });
+  }
+
+  window.handleImageUpload = async function (projIdx, input) {
+    const files = Array.from(input.files);
+    if (!files.length) return;
+
+    showToast(`Téléchargement de ${files.length} image(s)...`);
+
+    for (const file of files) {
+      try {
+        const ext = file.name.split('.').pop();
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'x-extension': ext },
+          body: file
+        });
+
+        if (res.ok) {
+          const { url } = await res.json();
+          if (!gallery[projIdx].images) gallery[projIdx].images = [];
+          gallery[projIdx].images.push(url);
+        }
+      } catch (e) {
+        console.error('Upload failed', e);
+      }
+    }
+
+    renderGallery();
+    autoSave('Images ajoutées avec succès !');
+  };
+
+  window.removeGalImg = function (projIdx, imgIdx) {
+    gallery[projIdx].images.splice(imgIdx, 1);
+    renderGallery();
+    autoSave('Image retirée !');
   }
 
   function addGalleryAction() {

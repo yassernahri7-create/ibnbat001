@@ -40,7 +40,7 @@ body {
   align-items: center;
   justify-content: space-between;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .menu-toggle {
@@ -139,8 +139,15 @@ h1 {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .card {
@@ -180,7 +187,8 @@ label {
   color: #475569;
 }
 
-input, textarea {
+input,
+textarea {
   width: 100%;
   padding: 12px 16px;
   border: 1px solid var(--border);
@@ -191,7 +199,8 @@ input, textarea {
   transition: 0.2s;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   border-color: var(--primary);
   outline: none;
   background: #fff;
@@ -253,7 +262,9 @@ input:focus, textarea:focus {
   background: var(--primary-hover);
 }
 
-.btn-full { width: 100%; }
+.btn-full {
+  width: 100%;
+}
 
 .btn-outline {
   background: transparent;
@@ -261,7 +272,9 @@ input:focus, textarea:focus {
   border: 1px solid var(--primary);
 }
 
-.btn-outline:hover { background: #eff6ff; }
+.btn-outline:hover {
+  background: #eff6ff;
+}
 
 .btn-delete {
   background: white;
@@ -271,7 +284,10 @@ input:focus, textarea:focus {
   font-size: 0.8rem;
 }
 
-.btn-delete:hover { background: #fef2f2; transform: none; }
+.btn-delete:hover {
+  background: #fef2f2;
+  transform: none;
+}
 
 .btn-move {
   background: white;
@@ -281,8 +297,15 @@ input:focus, textarea:focus {
   font-size: 0.9rem;
 }
 
-.btn-move:hover:not(:disabled) { background: #f1f5f9; transform: none; }
-.btn-move:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-move:hover:not(:disabled) {
+  background: #f1f5f9;
+  transform: none;
+}
+
+.btn-move:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
 
 /* ── Status Bar ── */
 .status-bar {
@@ -310,7 +333,9 @@ input:focus, textarea:focus {
   font-size: 0.9rem;
 }
 
-.save-status.ok { color: var(--success); }
+.save-status.ok {
+  color: var(--success);
+}
 
 /* ── Toast ── */
 #toast-container {
@@ -362,22 +387,96 @@ input:focus, textarea:focus {
   max-width: 400px;
 }
 
+/* ── Upload & Gallery Grid ── */
+.upload-area {
+  margin: 20px 0;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.gal-thumbs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.gal-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gal-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gal-thumb-del {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  background: rgba(239, 68, 68, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+.gal-thumb-del:hover {
+  transform: scale(1.1);
+  background: #ef4444;
+}
+
 /* ── Responsive ── */
 @media (max-width: 992px) {
   .sidebar {
     transform: translateX(-100%);
   }
+
   .sidebar.open {
     transform: translateX(0);
   }
+
   .main-content {
     margin-left: 0;
     width: 100%;
     padding: 80px 20px 140px;
   }
+
   .mobile-header {
     display: flex;
   }
+
   .status-bar {
     left: 0;
     width: 100%;
@@ -386,16 +485,20 @@ input:focus, textarea:focus {
     gap: 15px;
     height: auto;
   }
+
   .status-bar div:last-child {
     width: 100%;
     flex-direction: column;
   }
+
   .status-bar .btn {
     width: 100%;
   }
+
   .grid-2 {
     grid-template-columns: 1fr;
   }
+
   .sidebar-overlay {
     display: none;
     position: fixed;
@@ -403,9 +506,10 @@ input:focus, textarea:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1050;
   }
+
   .sidebar-overlay.open {
     display: block;
   }
