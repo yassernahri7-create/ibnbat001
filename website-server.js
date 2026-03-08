@@ -26,9 +26,8 @@ http.createServer((req, res) => {
     req.on("end", () => {
       try {
         const payload = JSON.parse(body || "{}");
-        // ensure data directory
         const dataDir = path.join(root, "data");
-        try { fs.mkdirSync(dataDir, { recursive: true }); } catch (e) {}
+        try { fs.mkdirSync(dataDir, { recursive: true }); } catch (e) { }
         const contactsFile = path.join(dataDir, "contacts.json");
         let list = [];
         try {
@@ -36,9 +35,7 @@ http.createServer((req, res) => {
             const rawFile = fs.readFileSync(contactsFile, "utf8");
             list = JSON.parse(rawFile || "[]");
           }
-        } catch (e) {
-          list = [];
-        }
+        } catch (e) { list = []; }
         payload.receivedAt = new Date().toISOString();
         list.push(payload);
         fs.writeFileSync(contactsFile, JSON.stringify(list, null, 2), "utf8");
@@ -50,6 +47,39 @@ http.createServer((req, res) => {
       }
     });
     return;
+  }
+
+  // API: Get/Set site configuration
+  if (raw === "/api/config") {
+    const configPath = path.join(root, "data", "config.json");
+    if (req.method === "GET") {
+      try {
+        const data = fs.existsSync(configPath) ? fs.readFileSync(configPath, "utf8") : "{}";
+        res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+        res.end(data);
+      } catch (e) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: "read_fail" }));
+      }
+      return;
+    }
+    if (req.method === "POST") {
+      let body = "";
+      req.on("data", (chunk) => (body += chunk));
+      req.on("end", () => {
+        try {
+          const dataDir = path.join(root, "data");
+          try { fs.mkdirSync(dataDir, { recursive: true }); } catch (e) { }
+          fs.writeFileSync(configPath, body, "utf8");
+          res.writeHead(200, { "Content-Type": "application/json; charset=utf-8" });
+          res.end(JSON.stringify({ ok: true }));
+        } catch (e) {
+          res.writeHead(500);
+          res.end(JSON.stringify({ error: "write_fail" }));
+        }
+      });
+      return;
+    }
   }
 
   let urlPath = raw === "/" ? "/index.html" : raw;

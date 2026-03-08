@@ -146,9 +146,26 @@ let currentServices = getStorage().services && getStorage().services.length ? ge
 ];
 
 /* ═══ INIT ═══════════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-  const data = getStorage();
+document.addEventListener('DOMContentLoaded', async () => {
+  let data = getStorage();
   let currentLang = localStorage.getItem(LANG_KEY) || 'fr';
+
+  // Try to fetch config from server
+  try {
+    const res = await fetch('/api/config');
+    if (res.ok) {
+      const serverData = await res.json();
+      if (serverData && Object.keys(serverData).length) {
+        data = serverData;
+        // Also update localStorage for offline/cached experience
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+    }
+  } catch (e) {
+    console.warn('Could not fetch server config, using local storage.');
+  }
+
+  if (data.services) currentServices = data.services;
 
   applyBrand(data.brand);
   applyPromo(data.promo);

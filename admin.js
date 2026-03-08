@@ -12,8 +12,20 @@ const DEFAULT_SERVICES = [
   }
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-  const data = getStorage();
+document.addEventListener('DOMContentLoaded', async () => {
+  let data = getStorage();
+
+  // 1. Initial Data Fetch
+  try {
+    const res = await fetch('/api/config');
+    if (res.ok) {
+      const serverData = await res.json();
+      if (serverData && Object.keys(serverData).length) {
+        data = serverData;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      }
+    }
+  } catch (e) { console.warn('Server config fetch failed', e); }
 
   // Mobile Menu Logic
   const menuToggle = document.getElementById('menuToggle');
@@ -160,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="pack-lang-content" id="pack_${i}_ar" style="display:none;" dir="rtl">
           <div class="grid-2">
             <div><label>العنوان والسعر (AR)</label><input type="text" value="${esc(pack.ar.title)}" onchange="updatePack(${i}, 'ar', 'title', this.value)"></div>
-            <div><label>إحصائية بارزة (AR)</label><input type="text" value="${esc(pack.ar.stat)}" onchange="updatePack(${i}, 'ar', 'stat', this.value)"></div>
+            <div><label>إحصائية صغيرة (AR)</label><input type="text" value="${esc(pack.ar.stat)}" onchange="updatePack(${i}, 'ar', 'stat', this.value)"></div>
           </div>
           <div><label>وصف قصير (AR)</label><input type="text" value="${esc(pack.ar.desc)}" onchange="updatePack(${i}, 'ar', 'desc', this.value)"></div>
           <div><label>الميزات المضمنة (واحدة في كل سطر)</label><textarea rows="3" onchange="updatePack(${i}, 'ar', 'features', this.value)">${esc(renderFeatures(pack.ar))}</textarea></div>
@@ -169,42 +181,43 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
     }).join('');
 
-    document.querySelectorAll('.remove-pack').forEach(b => b.addEventListener('click', (e) => {
-      packs.splice(Number(e.target.dataset.i), 1);
-      renderPacks();
-      autoSave('Plan supprimé avec succès !');
-    }));
+    packsContainer.querySelectorAll('.remove-pack').forEach(btn => {
+      btn.addEventListener('click', () => {
+        packs.splice(btn.dataset.i, 1);
+        renderPacks();
+        autoSave('Plan supprimé avec succès !');
+      });
+    });
   }
 
-  window.movePack = function (index, direction) {
-    const target = index + direction;
+  window.movePack = function (i, dir) {
+    const target = i + dir;
     if (target < 0 || target >= packs.length) return;
-    const temp = packs[index];
-    packs[index] = packs[target];
-    packs[target] = temp;
+    [packs[i], packs[target]] = [packs[target], packs[i]];
     renderPacks();
     autoSave();
-  }
+  };
 
-  window.switchPackLang = function (index, lang) {
-    document.querySelectorAll(`#tabGroup_${index} .l-tab`).forEach(t => t.classList.remove('active'));
-    event.target.classList.add('active');
-    document.getElementById(`pack_${index}_fr`).style.display = 'none';
-    document.getElementById(`pack_${index}_en`).style.display = 'none';
-    document.getElementById(`pack_${index}_ar`).style.display = 'none';
-    document.getElementById(`pack_${index}_${lang}`).style.display = 'block';
-  }
+  window.switchPackLang = function (idx, lang) {
+    const group = document.getElementById(`tabGroup_${idx}`);
+    group.querySelectorAll('.l-tab').forEach(t => {
+      t.classList.toggle('active', t.textContent.toLowerCase().includes(lang === 'ar' ? 'العربية' : lang));
+    });
+    document.getElementById(`pack_${idx}_fr`).style.display = lang === 'fr' ? 'block' : 'none';
+    document.getElementById(`pack_${idx}_en`).style.display = lang === 'en' ? 'block' : 'none';
+    document.getElementById(`pack_${idx}_ar`).style.display = lang === 'ar' ? 'block' : 'none';
+  };
 
-  window.updatePack = function (index, lang, key, value) {
-    packs[index][lang][key] = value;
+  window.updatePack = function (i, lang, key, val) {
+    packs[i][lang][key] = val;
     autoSave();
-  }
+  };
 
   function addPackAction() {
     packs.push({
-      fr: { title: 'Nouveau / Prix', desc: '', features: '', stat: '' },
-      en: { title: 'New / Price', desc: '', features: '', stat: '' },
-      ar: { title: 'جديد / السعر', desc: '', features: '', stat: '' }
+      fr: { title: 'Nouveau Plan', desc: '', features: '', stat: '' },
+      en: { title: 'New Plan', desc: '', features: '', stat: '' },
+      ar: { title: 'خطة جديدة', desc: '', features: '', stat: '' }
     });
     renderPacks();
     autoSave('Nouveau Plan ajouté et sauvegardé !');
@@ -212,6 +225,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Switch to packs tab if not active
     const packsBtn = document.querySelector('.nav-btn[data-target="packs"]');
     if (packsBtn) packsBtn.click();
+
+    setTimeout(() => {
+      const items = document.querySelectorAll('.service-item');
+      items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
   }
 
   document.getElementById('addPackBtn').addEventListener('click', addPackAction);
@@ -219,134 +237,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
   renderPacks();
 
-  /* ── 3. GALLERY (OLD WORK) ── */
+  /* ── 3. GALLERY ── */
   const galleryContainer = document.getElementById('galleryContainer');
 
   function renderGallery() {
-    galleryContainer.innerHTML = gallery.map((proj, i) => {
-      // Backward compat: convert old single image to array
-      if (!proj.images) proj.images = proj.image ? [proj.image] : [];
-
-      const thumbs = proj.images.map((src, j) => `
-        <div class="gal-thumb">
-          <img src="${src}" alt="img ${j + 1}">
-          <button class="gal-thumb-del" onclick="removeGalImg(${i}, ${j})">&times;</button>
-        </div>
-      `).join('');
-
-      return `
-      <div class="project-item">
+    galleryContainer.innerHTML = gallery.map((item, i) => `
+      <div class="project-item card">
         <div class="item-actions">
-          <button class="btn btn-move" onclick="moveGal(${i}, -1)" ${i === 0 ? 'disabled' : ''}>&uarr;</button>
-          <button class="btn btn-move" onclick="moveGal(${i}, 1)" ${i === gallery.length - 1 ? 'disabled' : ''}>&darr;</button>
-          <button class="btn btn-delete remove-gal" data-i="${i}">Retirer</button>
+           <button class="btn btn-delete remove-gal" data-i="${i}">Supprimer</button>
         </div>
-        <div style="margin-bottom:12px;">
-          <label>Identifiant du projet (Nom court)</label>
-          <input type="text" value="${esc(proj.title)}" onchange="updateGal(${i}, 'title', this.value)">
+        <div class="grid-2">
+           <div><label>Titre du Projet</label><input type="text" value="${esc(item.title)}" onchange="gallery[${i}].title=this.value; autoSave()"></div>
+           <div><label>Catégorie</label><input type="text" value="${esc(item.category)}" onchange="gallery[${i}].category=this.value; autoSave()"></div>
         </div>
-        <div style="margin-bottom:12px;">
-          <label>Catégorie (ex: Commerce, Restaurant)</label>
-          <input type="text" value="${esc(proj.category)}" onchange="updateGal(${i}, 'category', this.value)">
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>Lien du site (optionnel)</label>
-          <input type="text" value="${esc(proj.link)}" onchange="updateGal(${i}, 'link', this.value)" placeholder="https://example.com">
-        </div>
-        <div style="margin-bottom:12px;">
-          <label>Images du projet (ajoutez autant que vous voulez)</label>
-          <input type="file" onchange="uploadGalImgs(${i}, this)" accept="image/*" multiple>
-          <div class="gal-thumbs-grid" id="galGrid_${i}">
-            ${thumbs}
-          </div>
-          <small style="color:#94a3b8;">${proj.images.length} image(s) ajoutée(s)</small>
+        <div><label>Lien du projet (optionnel)</label><input type="text" value="${esc(item.link)}" onchange="gallery[${i}].link=this.value; autoSave()"></div>
+        
+        <div><label>Images (URLs, une par ligne)</label>
+          <textarea rows="3" onchange="gallery[${i}].images=this.value.split('\n').filter(Boolean); autoSave()">${(item.images || []).join('\n')}</textarea>
         </div>
       </div>
-      `;
-    }).join('');
+    `).join('');
 
-    document.querySelectorAll('.remove-gal').forEach(b => b.addEventListener('click', (e) => {
-      gallery.splice(Number(e.target.dataset.i), 1);
-      renderGallery();
-      autoSave('Projet retiré avec succès !');
-    }));
-  }
-
-  window.moveGal = function (index, direction) {
-    const target = index + direction;
-    if (target < 0 || target >= gallery.length) return;
-    const temp = gallery[index];
-    gallery[index] = gallery[target];
-    gallery[target] = temp;
-    renderGallery();
-    autoSave();
-  }
-
-  window.updateGal = function (index, key, value) {
-    gallery[index][key] = value;
-    autoSave();
-  }
-
-  window.removeGalImg = function (projIndex, imgIndex) {
-    gallery[projIndex].images.splice(imgIndex, 1);
-    renderGallery();
-    autoSave('Image supprimée !');
-  }
-
-  window.uploadGalImgs = function (index, input) {
-    const files = Array.from(input.files);
-    if (!files.length) return;
-    if (!gallery[index].images) gallery[index].images = [];
-
-    let loaded = 0;
-    files.forEach(f => {
-      const r = new FileReader();
-      r.onload = ev => {
-        // Smart compression to avoid breaking localStorage
-        const img = new window.Image();
-        img.onload = () => {
-          const canvas = document.createElement('canvas');
-          let w = img.width;
-          let h = img.height;
-          const MAX_SIZE = 800;
-
-          if (w > h && w > MAX_SIZE) {
-            h *= MAX_SIZE / w;
-            w = MAX_SIZE;
-          } else if (h > MAX_SIZE) {
-            w *= MAX_SIZE / h;
-            h = MAX_SIZE;
-          }
-
-          canvas.width = Math.round(w);
-          canvas.height = Math.round(h);
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          // Compress to JPEG with 80% quality (very lightweight)
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
-          gallery[index].images.push(dataUrl);
-
-          loaded++;
-          if (loaded === files.length) {
-            renderGallery();
-            autoSave(`${loaded} image(s) compressée(s) et ajoutée(s) !`);
-          }
-        };
-        img.src = ev.target.result;
-      };
-      r.readAsDataURL(f);
+    galleryContainer.querySelectorAll('.remove-gal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        gallery.splice(btn.dataset.i, 1);
+        renderGallery();
+        autoSave('Projet supprimé avec succès !');
+      });
     });
   }
 
   function addGalleryAction() {
-    gallery.push({ title: 'Nouveau projet', category: '', link: '', desc: '', image: '', images: [] });
+    gallery.push({ title: 'Nouveau Projet', category: 'Web', link: '', images: [] });
     renderGallery();
-    autoSave('Nouveau Projet ajouté et sauvegardé !');
-
-    // Switch to gallery tab if not active
-    const galBtn = document.querySelector('.nav-btn[data-target="gallery"]');
-    if (galBtn) galBtn.click();
+    autoSave('Nouveau Projet ajouté !');
 
     // Scroll to the new item
     setTimeout(() => {
@@ -362,7 +286,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderGallery();
 
   /* ── SAVE ALL ── */
-  document.getElementById('saveAllBtn').addEventListener('click', () => {
+  document.getElementById('saveAllBtn').addEventListener('click', async () => {
 
     // We must ensure the 'features' are stored as an array of strings per language to match `script.js`
     const cleanedPacks = JSON.parse(JSON.stringify(packs));
@@ -377,7 +301,23 @@ document.addEventListener('DOMContentLoaded', () => {
     data.services = cleanedPacks;
     data.projects = gallery;
 
+    // Local Backup
     setStorage(data);
+
+    // Server Persistence
+    try {
+      const res = await fetch('/api/config', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        showToast('Sauvegardé sur le serveur !');
+      }
+    } catch (e) {
+      console.error('Server save failed', e);
+      showToast('Erreur serveur (sauvegardé localement)');
+    }
 
     const s = document.getElementById('saveStatus');
     s.innerHTML = `✅ Sauvegardé avec succès à ${new Date().toLocaleTimeString()} !`;
