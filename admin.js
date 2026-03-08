@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 1. Initial Data Fetch
   try {
-    const res = await fetch('/api/config');
+    const res = await fetch('/api/config?v=' + Date.now());
     if (res.ok) {
       const serverData = await res.json();
       if (serverData && Object.keys(serverData).length) {
@@ -253,7 +253,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function renderGallery() {
     galleryContainer.innerHTML = window.gallery.map((item, i) => {
-      const imgRaw = (item.images || []).join('\n');
       return `
       <div class="project-item card">
         <div class="item-actions">
@@ -266,7 +265,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         <div><label>Lien du projet (optionnel)</label><input type="text" value="${esc(item.link)}" onchange="window.gallery[${i}].link=this.value; autoSave()"></div>
         
         <div class="upload-area">
-          <label>Images du projet (Choisir depuis l'ordinateur)</label>
+          <label>Images du projet (Choisir depuis l'ordinateur/téléphone)</label>
           <div class="file-input-wrapper">
             <button class="btn btn-primary">📁 Sélectionner des images</button>
             <input type="file" multiple accept="image/*" onchange="handleImageUpload(${i}, this)">
@@ -279,10 +278,6 @@ document.addEventListener('DOMContentLoaded', async () => {
               </div>
             `).join('')}
           </div>
-        </div>
-
-        <div><label>Ou URLs (une par ligne)</label>
-          <textarea rows="3" onchange="window.gallery[${i}].images=this.value.split('\n').filter(Boolean); autoSave()">${esc(imgRaw)}</textarea>
         </div>
       </div>
     `;

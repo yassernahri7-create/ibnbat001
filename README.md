@@ -1,42 +1,55 @@
-﻿# websolution Website
+﻿# Ibn Batouta Web
 
-Simple 2-page website for local business website services.
+A lightweight platform for creating professional websites. Includes a main frontend and a management admin panel.
 
-## Files
-- index.html
-- services.html
-- styles.css
-- script.js
+## Local Development
 
-## Run
-Run a local static server (Node.js provided) and open the site in your browser.
+You can run the application locally without Docker. The app requires Node.js installed on your machine.
+There are no external dependencies or build steps.
 
-Start the website server (default port 5500):
+1. Start the Website Server:
+   ```bash
+   node website-server.js
+   ```
+   *Available at http://localhost:5500*
 
-```powershell
-node website-server.js
-```
-Admin panel is available at `/admin.html` on the same host, for example:
+2. Start the Admin Server:
+   ```bash
+   node admin-server.js
+   ```
+   *Available at http://localhost:5600/admin*
 
-```powershell
-http://localhost:5510/admin.html
-```
+## Deployment (Docker & Coolify)
 
-Or run on a different port:
+This project is fully containerized and ready to deploy on any VPS using Docker or platforms like Coolify.
 
-```powershell
-$env:PORT=5510; node website-server.js
-```
+**Requirements**:
+- Docker and Docker Compose installed (or Coolify active on your server).
 
-Contact form submissions are saved to `data/contacts.json` when sent from the site.
+### Deploying Manually with Docker Compose
 
-## Edit brand/contact quickly
-- Instagram links: search `websolution0101`
-- WhatsApp link: search `wa.me/212717430045`
-- Email: search `saad12eq@gmail.com`
+1. Clone the repository on your server.
+2. Copy the example environment file:
+   ```bash
+   cp .env.example .env
+   ```
+3. Edit the `.env` file to customize your ports if needed.
+4. Start the application:
+   ```bash
+   docker-compose up -d --build
+   ```
 
-## Language
-- Default uses browser language (Auto mode)
-- Manual switch available in header: English / Francais / العربية
-- Preference is saved in browser localStorage key: `site_lang`
+### Deploying with Coolify
 
+1. Connect your Github repository to Coolify.
+2. Choose **Docker Compose** as the build pack.
+3. Coolify will automatically parse the `docker-compose.yml` file and set up both the website and admin containers.
+4. Add the appropriate environment variables (`WEBSITE_PORT`, `ADMIN_PORT`) or just rely on default values.
+5. In Coolify, bind your domains:
+   - For `ibnbatouta_website`, set your main domain (e.g., `https://ibnbatouta.ma`).
+   - For `ibnbatouta_admin`, set your admin domain (e.g., `https://admin.ibnbatouta.ma`).
+   (*Note: Uncomment the Traefik labels in `docker-compose.yml` if your Coolify setup requires explicit Traefik definitions, otherwise Coolify handles routing automatically.*)
+
+## Data Persistence
+
+Configuration data, project information, and uploaded images are saved natively in the `data/` and `assets/uploads/` directories. In the Docker setup, these folders are mounted as named Docker volumes, ensuring persistent data across container restarts.

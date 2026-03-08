@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  website:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: ibnbatouta-website:latest
+    container_name: ibnbatouta_website
+    restart: unless-stopped
+    command: node website-server.js
+    environment:
+      - NODE_ENV=production
+      - PORT=${WEBSITE_PORT:-5500}
+    ports:
+      - "${WEBSITE_PORT:-5500}:${WEBSITE_PORT:-5500}"
+    volumes:
+      - app_data:/app/data
+      - app_uploads:/app/assets/uploads
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:${WEBSITE_PORT:-5500}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    # Coolify & Traefik Reverse Proxy Configuration
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.website.rule=Host(`${WEBSITE_DOMAIN}`)"
+      - "traefik.http.services.website.loadbalancer.server.port=${WEBSITE_PORT:-5500}"
+
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    image: ibnbatouta-admin:latest
+    container_name: ibnbatouta_admin
+    restart: unless-stopped
+    command: node admin-server.js
+    environment:
+      - NODE_ENV=production
+      - PORT=${ADMIN_PORT:-5600}
+    ports:
+      - "${ADMIN_PORT:-5600}:${ADMIN_PORT:-5600}"
+    volumes:
+      - app_data:/app/data
+      - app_uploads:/app/assets/uploads
+    networks:
+      - default
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:${ADMIN_PORT:-5600}/admin.html"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    # Coolify & Traefik Reverse Proxy Configuration
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.admin.rule=Host(`${ADMIN_DOMAIN}`)"
+      - "traefik.http.services.admin.loadbalancer.server.port=${ADMIN_PORT:-5600}"
+
+volumes:
+  app_data:
+  app_uploads:
+
+# Defining the default network explicitly (Coolify often manages its own networks to route to Traefik)
+networks:
+  default:
+    driver: bridge

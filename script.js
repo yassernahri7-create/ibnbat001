@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Try to fetch config from server
   try {
-    const res = await fetch('/api/config');
+    const res = await fetch('/api/config?v=' + Date.now());
     if (res.ok) {
       const serverData = await res.json();
       if (serverData && Object.keys(serverData).length) {

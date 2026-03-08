@@ -2,7 +2,7 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const port = 5600;
+const port = process.env.PORT || 5600;
 const root = process.cwd();
 
 const mime = {
@@ -20,6 +20,9 @@ const mime = {
 http.createServer((req, res) => {
   const raw = req.url.split("?")[0];
   let urlPath = raw === "/" ? "/admin.html" : raw;
+  if (raw === "/admin" || raw === "/admin/") {
+    urlPath = "/admin.html";
+  }
 
   // API: Handle Image Uploads
   if (req.method === "POST" && raw === "/api/upload") {

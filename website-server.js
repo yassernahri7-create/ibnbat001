@@ -19,6 +19,34 @@ const mime = {
 
 http.createServer((req, res) => {
   const raw = req.url.split("?")[0];
+
+  // API: Handle Image Uploads (Synchronized with admin-server)
+  if (req.method === "POST" && raw === "/api/upload") {
+    const chunks = [];
+    req.on("data", chunk => chunks.push(chunk));
+    req.on("end", () => {
+      try {
+        const buffer = Buffer.concat(chunks);
+        const ext = (req.headers["x-extension"] || "jpg").replace(".", "");
+        const filename = `upload_${Date.now()}.${ext}`;
+        const uploadDir = path.join(root, "assets", "uploads");
+
+        if (!fs.existsSync(uploadDir)) {
+          fs.mkdirSync(uploadDir, { recursive: true });
+        }
+
+        const filePath = path.join(uploadDir, filename);
+        fs.writeFileSync(filePath, buffer);
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({ url: `/assets/uploads/${filename}` }));
+      } catch (err) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: "upload_failed" }));
+      }
+    });
+    return;
+  }
   // API: store contact requests server-side (simple JSON file)
   if (req.method === "POST" && raw === "/api/contact") {
     let body = "";
