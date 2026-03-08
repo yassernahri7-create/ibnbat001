@@ -17,7 +17,7 @@ const mime = {
   ".ico": "image/x-icon"
 };
 
-http.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   const raw = req.url.split("?")[0];
 
   // API: Handle Image Uploads (Synchronized with admin-server)
@@ -126,6 +126,7 @@ http.createServer((req, res) => {
     res.writeHead(200, { "Content-Type": mime[ext] || "application/octet-stream" });
     fs.createReadStream(filePath).pipe(res);
   });
-app.listen(PORT, "0.0.0.0", () => {
+});
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on ${PORT}`);
 });
