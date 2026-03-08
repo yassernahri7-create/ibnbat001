@@ -270,19 +270,21 @@ function switchLanguage(lang) {
 
 /* ═══ Brand ══════════════════════════════════════════════════════════ */
 function applyBrand(brand) {
-  if (!brand) return;
-  if (brand.logo) {
-    document.querySelectorAll('.brand').forEach(el => {
-      el.innerHTML = `<img src="${brand.logo}" alt="Logo" class="brand-logo-img">`;
-    });
-  }
+  if (!brand || !brand.logo) return;
+  document.querySelectorAll('.main-logo-img').forEach(img => {
+    img.src = brand.logo;
+  });
 }
 
 function applyPromo(promo) {
   const banner = document.getElementById('promoBanner');
-  if (!banner || !promo?.enabled || !promo.text) return;
-  banner.style.display = 'block';
-  banner.innerHTML = promo.link ? `<a href="${promo.link}">${promo.text}</a>` : promo.text;
+  if (!banner) return;
+  if (promo?.enabled && promo.text) {
+    banner.style.display = 'block';
+    banner.innerHTML = promo.link ? `<a href="${promo.link}">${promo.text}</a>` : promo.text;
+  } else {
+    banner.style.display = 'none';
+  }
 }
 
 function applySocial(social) {
@@ -384,11 +386,10 @@ function renderProjectsUI(projects) {
   c.innerHTML = items.map((p, idx) => {
     // Backward compat: convert old single image to images array
     const imgs = p.images && p.images.length ? p.images : (p.image ? [p.image] : []);
-    const safeImgs = JSON.stringify(imgs).replace(/'/g, "\\'");
-
+    const safeTitle = (p.title || '').replace(/"/g, '&quot;');
     const thumbStrip = imgs.length > 0
       ? `<div class="project-imgs-strip">
-          ${imgs.map((src, j) => `<img src="${src}" alt="${p.title} ${j + 1}" class="strip-img" onclick="event.stopPropagation(); openGalleryLightbox(${idx}, ${j})">`).join('')}
+          ${imgs.map((src, j) => `<img src="${src}" alt="${safeTitle} ${j + 1}" class="strip-img" onclick="event.stopPropagation(); openGalleryLightbox(${idx}, ${j})">`).join('')}
          </div>`
       : `<div style="width:100%;height:210px;background:linear-gradient(135deg,#eee,#ddd);display:flex;align-items:center;justify-content:center;font-size:2rem;color:#bbb;">🌐</div>`;
 

@@ -76,9 +76,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.reload();
   });
 
-  let social = data.social || { whatsapp: '', insta: '', fb: '' };
-  let packs = data.services && data.services.length ? data.services : JSON.parse(JSON.stringify(DEFAULT_SERVICES));
-  let gallery = data.projects || [];
+  window.social = data.social || { whatsapp: '', insta: '', fb: '' };
+  window.packs = data.services && data.services.length ? data.services : JSON.parse(JSON.stringify(DEFAULT_SERVICES));
+  window.gallery = data.projects || [];
+  window.brand = data.brand || { logo: '' };
+  window.promo = data.promo || { enabled: false, text: '', link: '' };
 
   window.showToast = function (message) {
     const container = document.getElementById('toast-container');
@@ -107,7 +109,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       navBtns.forEach(b => b.classList.remove('active'));
       panels.forEach(p => p.classList.remove('active'));
       btn.classList.add('active');
-      document.getElementById(btn.dataset.target).classList.add('active');
+      const targetId = btn.dataset.target;
+      const targetPanel = document.getElementById(targetId);
+      if (targetPanel) targetPanel.classList.add('active');
+
       if (window.innerWidth <= 992 && sidebar.classList.contains('open')) {
         toggleSidebar();
       }
@@ -115,32 +120,42 @@ document.addEventListener('DOMContentLoaded', async () => {
   });
 
   /* ── 1. SOCIALS ── */
-  v('waNum', social.whatsapp);
-  v('igLink', social.insta);
-  v('fbLink', social.fb);
+  v('waNum', window.social.whatsapp);
+  v('igLink', window.social.insta);
+  v('fbLink', window.social.fb);
 
   /* ── 1.1 SECURITY ── */
   v('adminUser', data.admin.user);
   v('adminPass', data.admin.pass);
 
+  /* ── 1.2 BRAND & PROMO ── */
+  v('logoUrl', window.brand.logo);
+  const promoCheck = document.getElementById('promoEnabled');
+  if (promoCheck) promoCheck.checked = window.promo.enabled;
+  v('promoText', window.promo.text);
+  v('promoLink', window.promo.link);
+
+  document.getElementById('logoUrl')?.addEventListener('change', e => { window.brand.logo = e.target.value; autoSave(); });
+  document.getElementById('promoEnabled')?.addEventListener('change', e => { window.promo.enabled = e.target.checked; autoSave(); });
+  document.getElementById('promoText')?.addEventListener('change', e => { window.promo.text = e.target.value; autoSave(); });
+  document.getElementById('promoLink')?.addEventListener('change', e => { window.promo.link = e.target.value; autoSave(); });
+
   /* ── 2. PACKS & SERVICES ── */
   const packsContainer = document.getElementById('packsContainer');
 
   function renderPacks() {
-    packsContainer.innerHTML = packs.map((pack, i) => {
-      // Safely ensure structure
+    packsContainer.innerHTML = window.packs.map((pack, i) => {
       if (!pack.fr) pack.fr = { title: '', desc: '', features: '', stat: '' };
       if (!pack.en) pack.en = { title: '', desc: '', features: '', stat: '' };
       if (!pack.ar) pack.ar = { title: '', desc: '', features: '', stat: '' };
 
-      // Convert arrays back to string for textareas (if stored as array from old script)
       const renderFeatures = (langPack) => Array.isArray(langPack.features) ? langPack.features.join('\n') : langPack.features;
 
       return `
       <div class="service-item">
         <div class="item-actions">
           <button class="btn btn-move" onclick="movePack(${i}, -1)" ${i === 0 ? 'disabled' : ''}>&uarr;</button>
-          <button class="btn btn-move" onclick="movePack(${i}, 1)" ${i === packs.length - 1 ? 'disabled' : ''}>&darr;</button>
+          <button class="btn btn-move" onclick="movePack(${i}, 1)" ${i === window.packs.length - 1 ? 'disabled' : ''}>&darr;</button>
           <button class="btn btn-delete remove-pack" data-i="${i}">Supprimer</button>
         </div>
         <h3 style="margin-bottom:16px;">Plan / Pack #${i + 1}</h3>
@@ -153,29 +168,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <div class="pack-lang-content" id="pack_${i}_fr">
           <div class="grid-2">
-            <div><label>Titre & Prix (FR)</label><input type="text" value="${esc(pack.fr.title)}" onchange="updatePack(${i}, 'fr', 'title', this.value)"></div>
-            <div><label>Petite Statistique (FR)</label><input type="text" value="${esc(pack.fr.stat)}" onchange="updatePack(${i}, 'fr', 'stat', this.value)"></div>
+            <div><label>Titre & Prix (FR)</label><input type="text" value="${esc(pack.fr.title)}" onchange="window.packs[${i}].fr.title=this.value; autoSave()"></div>
+            <div><label>Petite Statistique (FR)</label><input type="text" value="${esc(pack.fr.stat)}" onchange="window.packs[${i}].fr.stat=this.value; autoSave()"></div>
           </div>
-          <div><label>Description courte (FR)</label><input type="text" value="${esc(pack.fr.desc)}" onchange="updatePack(${i}, 'fr', 'desc', this.value)"></div>
-          <div><label>Fonctionnalités incluses (une par ligne)</label><textarea rows="3" onchange="updatePack(${i}, 'fr', 'features', this.value)">${esc(renderFeatures(pack.fr))}</textarea></div>
+          <div><label>Description courte (FR)</label><input type="text" value="${esc(pack.fr.desc)}" onchange="window.packs[${i}].fr.desc=this.value; autoSave()"></div>
+          <div><label>Fonctionnalités incluses (une par ligne)</label><textarea rows="3" onchange="window.packs[${i}].fr.features=this.value; autoSave()">${esc(renderFeatures(pack.fr))}</textarea></div>
         </div>
 
         <div class="pack-lang-content" id="pack_${i}_en" style="display:none;">
           <div class="grid-2">
-            <div><label>Title & Price (EN)</label><input type="text" value="${esc(pack.en.title)}" onchange="updatePack(${i}, 'en', 'title', this.value)"></div>
-            <div><label>Highlight Stat (EN)</label><input type="text" value="${esc(pack.en.stat)}" onchange="updatePack(${i}, 'en', 'stat', this.value)"></div>
+            <div><label>Title & Price (EN)</label><input type="text" value="${esc(pack.en.title)}" onchange="window.packs[${i}].en.title=this.value; autoSave()"></div>
+            <div><label>Highlight Stat (EN)</label><input type="text" value="${esc(pack.en.stat)}" onchange="window.packs[${i}].en.stat=this.value; autoSave()"></div>
           </div>
-          <div><label>Short Description (EN)</label><input type="text" value="${esc(pack.en.desc)}" onchange="updatePack(${i}, 'en', 'desc', this.value)"></div>
-          <div><label>Included Features (one per line)</label><textarea rows="3" onchange="updatePack(${i}, 'en', 'features', this.value)">${esc(renderFeatures(pack.en))}</textarea></div>
+          <div><label>Short Description (EN)</label><input type="text" value="${esc(pack.en.desc)}" onchange="window.packs[${i}].en.desc=this.value; autoSave()"></div>
+          <div><label>Included Features (one per line)</label><textarea rows="3" onchange="window.packs[${i}].en.features=this.value; autoSave()">${esc(renderFeatures(pack.en))}</textarea></div>
         </div>
 
         <div class="pack-lang-content" id="pack_${i}_ar" style="display:none;" dir="rtl">
           <div class="grid-2">
-            <div><label>العنوان والسعر (AR)</label><input type="text" value="${esc(pack.ar.title)}" onchange="updatePack(${i}, 'ar', 'title', this.value)"></div>
-            <div><label>إحصائية صغيرة (AR)</label><input type="text" value="${esc(pack.ar.stat)}" onchange="updatePack(${i}, 'ar', 'stat', this.value)"></div>
+            <div><label>العنوان والسعر (AR)</label><input type="text" value="${esc(pack.ar.title)}" onchange="window.packs[${i}].ar.title=this.value; autoSave()"></div>
+            <div><label>إحصائية صغيرة (AR)</label><input type="text" value="${esc(pack.ar.stat)}" onchange="window.packs[${i}].ar.stat=this.value; autoSave()"></div>
           </div>
-          <div><label>وصف قصير (AR)</label><input type="text" value="${esc(pack.ar.desc)}" onchange="updatePack(${i}, 'ar', 'desc', this.value)"></div>
-          <div><label>الميزات المضمنة (واحدة في كل سطر)</label><textarea rows="3" onchange="updatePack(${i}, 'ar', 'features', this.value)">${esc(renderFeatures(pack.ar))}</textarea></div>
+          <div><label>وصف قصير (AR)</label><input type="text" value="${esc(pack.ar.desc)}" onchange="window.packs[${i}].ar.desc=this.value; autoSave()"></div>
+          <div><label>الميزات المضمنة (واحدة في كل سطر)</label><textarea rows="3" onchange="window.packs[${i}].ar.features=this.value; autoSave()">${esc(renderFeatures(pack.ar))}</textarea></div>
         </div>
       </div>
       `;
@@ -183,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     packsContainer.querySelectorAll('.remove-pack').forEach(btn => {
       btn.addEventListener('click', () => {
-        packs.splice(btn.dataset.i, 1);
+        window.packs.splice(btn.dataset.i, 1);
         renderPacks();
         autoSave('Plan supprimé avec succès !');
       });
@@ -192,8 +207,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   window.movePack = function (i, dir) {
     const target = i + dir;
-    if (target < 0 || target >= packs.length) return;
-    [packs[i], packs[target]] = [packs[target], packs[i]];
+    if (target < 0 || target >= window.packs.length) return;
+    [window.packs[i], window.packs[target]] = [window.packs[target], window.packs[i]];
     renderPacks();
     autoSave();
   };
@@ -209,48 +224,46 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   window.updatePack = function (i, lang, key, val) {
-    packs[i][lang][key] = val;
+    window.packs[i][lang][key] = val;
     autoSave();
   };
 
   function addPackAction() {
-    packs.push({
+    window.packs.push({
       fr: { title: 'Nouveau Plan', desc: '', features: '', stat: '' },
       en: { title: 'New Plan', desc: '', features: '', stat: '' },
       ar: { title: 'خطة جديدة', desc: '', features: '', stat: '' }
     });
     renderPacks();
     autoSave('Nouveau Plan ajouté et sauvegardé !');
-
-    // Switch to packs tab if not active
     const packsBtn = document.querySelector('.nav-btn[data-target="packs"]');
     if (packsBtn) packsBtn.click();
-
     setTimeout(() => {
       const items = document.querySelectorAll('.service-item');
-      items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (items.length) items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   }
 
   document.getElementById('addPackBtn').addEventListener('click', addPackAction);
   document.getElementById('sideAddBtn').addEventListener('click', addPackAction);
-
   renderPacks();
 
   /* ── 3. GALLERY ── */
   const galleryContainer = document.getElementById('galleryContainer');
 
   function renderGallery() {
-    galleryContainer.innerHTML = gallery.map((item, i) => `
+    galleryContainer.innerHTML = window.gallery.map((item, i) => {
+      const imgRaw = (item.images || []).join('\n');
+      return `
       <div class="project-item card">
         <div class="item-actions">
            <button class="btn btn-delete remove-gal" data-i="${i}">Supprimer</button>
         </div>
         <div class="grid-2">
-           <div><label>Titre du Projet</label><input type="text" value="${esc(item.title)}" onchange="gallery[${i}].title=this.value; autoSave()"></div>
-           <div><label>Catégorie</label><input type="text" value="${esc(item.category)}" onchange="gallery[${i}].category=this.value; autoSave()"></div>
+           <div><label>Titre du Projet</label><input type="text" value="${esc(item.title)}" onchange="window.gallery[${i}].title=this.value; autoSave()"></div>
+           <div><label>Catégorie</label><input type="text" value="${esc(item.category)}" onchange="window.gallery[${i}].category=this.value; autoSave()"></div>
         </div>
-        <div><label>Lien du projet (optionnel)</label><input type="text" value="${esc(item.link)}" onchange="gallery[${i}].link=this.value; autoSave()"></div>
+        <div><label>Lien du projet (optionnel)</label><input type="text" value="${esc(item.link)}" onchange="window.gallery[${i}].link=this.value; autoSave()"></div>
         
         <div class="upload-area">
           <label>Images du projet (Choisir depuis l'ordinateur)</label>
@@ -269,14 +282,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         </div>
 
         <div><label>Ou URLs (une par ligne)</label>
-          <textarea rows="3" onchange="gallery[${i}].images=this.value.split('\\n').filter(Boolean); autoSave()">${(item.images || []).join('\n')}</textarea>
+          <textarea rows="3" onchange="window.gallery[${i}].images=this.value.split('\n').filter(Boolean); autoSave()">${esc(imgRaw)}</textarea>
         </div>
       </div>
-    `).join('');
+    `;
+    }).join('');
 
     galleryContainer.querySelectorAll('.remove-gal').forEach(btn => {
       btn.addEventListener('click', () => {
-        gallery.splice(btn.dataset.i, 1);
+        window.gallery.splice(btn.dataset.i, 1);
         renderGallery();
         autoSave('Projet supprimé avec succès !');
       });
@@ -286,9 +300,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.handleImageUpload = async function (projIdx, input) {
     const files = Array.from(input.files);
     if (!files.length) return;
-
     showToast(`Téléchargement de ${files.length} image(s)...`);
-
     for (const file of files) {
       try {
         const ext = file.name.split('.').pop();
@@ -297,33 +309,27 @@ document.addEventListener('DOMContentLoaded', async () => {
           headers: { 'x-extension': ext },
           body: file
         });
-
         if (res.ok) {
           const { url } = await res.json();
-          if (!gallery[projIdx].images) gallery[projIdx].images = [];
-          gallery[projIdx].images.push(url);
+          if (!window.gallery[projIdx].images) window.gallery[projIdx].images = [];
+          window.gallery[projIdx].images.push(url);
         }
-      } catch (e) {
-        console.error('Upload failed', e);
-      }
+      } catch (e) { console.error('Upload failed', e); }
     }
-
     renderGallery();
     autoSave('Images ajoutées avec succès !');
   };
 
   window.removeGalImg = function (projIdx, imgIdx) {
-    gallery[projIdx].images.splice(imgIdx, 1);
+    window.gallery[projIdx].images.splice(imgIdx, 1);
     renderGallery();
     autoSave('Image retirée !');
-  }
+  };
 
   function addGalleryAction() {
-    gallery.push({ title: 'Nouveau Projet', category: 'Web', link: '', images: [] });
+    window.gallery.push({ title: 'Nouveau Projet', category: 'Web', link: '', images: [] });
     renderGallery();
     autoSave('Nouveau Projet ajouté !');
-
-    // Scroll to the new item
     setTimeout(() => {
       const items = document.querySelectorAll('.project-item');
       if (items.length) items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -331,16 +337,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   document.getElementById('addGalleryBtn').addEventListener('click', addGalleryAction);
-  const sideGalBtn = document.getElementById('sideAddGalBtn');
-  if (sideGalBtn) sideGalBtn.addEventListener('click', addGalleryAction);
-
+  document.getElementById('sideAddGalBtn')?.addEventListener('click', addGalleryAction);
   renderGallery();
 
   /* ── SAVE ALL ── */
   document.getElementById('saveAllBtn').addEventListener('click', async () => {
-
     // We must ensure the 'features' are stored as an array of strings per language to match `script.js`
-    const cleanedPacks = JSON.parse(JSON.stringify(packs));
+    const cleanedPacks = JSON.parse(JSON.stringify(window.packs));
     cleanedPacks.forEach(p => {
       if (typeof p.fr.features === 'string') p.fr.features = p.fr.features.split('\n').filter(Boolean);
       if (typeof p.en.features === 'string') p.en.features = p.en.features.split('\n').filter(Boolean);
@@ -350,21 +353,19 @@ document.addEventListener('DOMContentLoaded', async () => {
     data.social = { whatsapp: val('waNum'), insta: val('igLink'), fb: val('fbLink') };
     data.admin = { user: val('adminUser'), pass: val('adminPass') };
     data.services = cleanedPacks;
-    data.projects = gallery;
+    data.projects = window.gallery;
+    data.brand = window.brand;
+    data.promo = window.promo;
 
-    // Local Backup
     setStorage(data);
 
-    // Server Persistence
     try {
       const res = await fetch('/api/config', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if (res.ok) {
-        showToast('Sauvegardé sur le serveur !');
-      }
+      if (res.ok) showToast('Sauvegardé sur le serveur !');
     } catch (e) {
       console.error('Server save failed', e);
       showToast('Erreur serveur (sauvegardé localement)');
@@ -373,8 +374,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const s = document.getElementById('saveStatus');
     s.innerHTML = `✅ Sauvegardé avec succès à ${new Date().toLocaleTimeString()} !`;
     s.className = 'save-status ok';
-
-    // Reset status after 3s
     setTimeout(() => {
       s.innerHTML = 'Prêt à enregistrer.';
       s.className = 'save-status';
@@ -396,8 +395,6 @@ function setStorage(d) {
     if (window.showToast) {
       document.getElementById('toast-container').innerHTML = ''; // clear old
       window.showToast('Erreur : Stockage Plein ! Veuillez retirer de vieilles images.', true);
-    } else {
-      alert("Erreur de sauvegarde : l'image est trop lourde ! Retirez des images.");
     }
   }
 }

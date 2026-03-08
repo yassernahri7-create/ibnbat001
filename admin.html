@@ -31,6 +31,13 @@
       <img src="assets/brand/ibn-batouta-logo.svg" alt="Logo" style="height:40px; width:auto;">
       Ibn Batouta Web
     </div>
+    <button class="nav-btn" data-target="brand">
+      <svg viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor"
+          stroke-width="2" />
+      </svg>
+      Identité & Logo
+    </button>
     <button class="nav-btn active" data-target="socials">
       <svg viewBox="0 0 24 24">
         <path
@@ -72,6 +79,45 @@
   <div class="main-content">
     <h1>Espace d'Administration</h1>
     <p class="subtitle">Modifiez le contenu de votre site facilement. Les modifications sont instantanées.</p>
+
+    <!-- 0. BRAND & IDENTITY SECTION -->
+    <div id="brand" class="panel-section">
+      <div class="card">
+        <div class="card-header">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg> Identité Visuelle</h2>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label>URL du Logo (SVG ou PNG)</label>
+            <input type="text" id="logoUrl" placeholder="assets/brand/logo.svg">
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+          <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg> Barre Promotionnelle</h2>
+        </div>
+        <div style="margin-bottom:15px; display:flex; align-items:center; gap:10px;">
+          <input type="checkbox" id="promoEnabled" style="width:auto; cursor:pointer;">
+          <label for="promoEnabled" style="margin:0; cursor:pointer;">Activer la barre de promo en haut du site</label>
+        </div>
+        <div class="grid-2">
+          <div>
+            <label>Texte de la promo</label>
+            <input type="text" id="promoText" placeholder="Ex: -20% sur tous nos packs !">
+          </div>
+          <div>
+            <label>Lien (optionnel)</label>
+            <input type="text" id="promoLink" placeholder="https://...">
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- 1. SOCIALS SECTION -->
     <div id="socials" class="panel-section active">
