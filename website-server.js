@@ -126,6 +126,6 @@ http.createServer((req, res) => {
     res.writeHead(200, { "Content-Type": mime[ext] || "application/octet-stream" });
     fs.createReadStream(filePath).pipe(res);
   });
-}).listen(port, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`Website server running at http://localhost:${port}`);
 });
