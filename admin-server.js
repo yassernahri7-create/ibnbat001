@@ -2,7 +2,9 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const port = process.env.PORT || 5600;
+const parsedPort = Number.parseInt(process.env.PORT || "", 10);
+const isValidPort = Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535;
+const port = isValidPort ? parsedPort : 5600;
 const root = process.cwd();
 
 const mime = {
@@ -101,7 +103,7 @@ http.createServer((req, res) => {
     res.writeHead(200, { "Content-Type": mime[ext] || "application/octet-stream" });
     fs.createReadStream(filePath).pipe(res);
   });
-}).listen(port, () => {
-  console.log(`Admin server running at http://localhost:${port}`);
+}).listen(port, "0.0.0.0", () => {
+  console.log(`Admin server running on 0.0.0.0:${port}`);
 });
 
