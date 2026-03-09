@@ -2,7 +2,9 @@ const http = require("http");
 const fs = require("fs");
 const path = require("path");
 
-const port = process.env.PORT || 5500;
+const parsedPort = Number.parseInt(process.env.PORT || "", 10);
+const isValidPort = Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535;
+const port = isValidPort ? parsedPort : 5500;
 const root = process.cwd();
 
 const mime = {
@@ -127,6 +129,6 @@ const server = http.createServer((req, res) => {
     fs.createReadStream(filePath).pipe(res);
   });
 });
-server.listen(PORT, "0.0.0.0", () => {
-  console.log(`Server running on ${PORT}`);
+server.listen(port, "0.0.0.0", () => {
+  console.log(`Website server running on 0.0.0.0:${port}`);
 });
