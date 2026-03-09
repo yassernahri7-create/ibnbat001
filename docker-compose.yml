@@ -27,10 +27,6 @@ services:
       retries: 3
       start_period: 5s
     # Coolify & Traefik Reverse Proxy Configuration
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.website.rule=Host(`${WEBSITE_DOMAIN}`)"
-      - "traefik.http.services.website.loadbalancer.server.port=${WEBSITE_PORT:-5500}"
 
   admin:
     build:
@@ -58,10 +54,6 @@ services:
       retries: 3
       start_period: 5s
     # Coolify & Traefik Reverse Proxy Configuration
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.admin.rule=Host(`${ADMIN_DOMAIN}`)"
-      - "traefik.http.services.admin.loadbalancer.server.port=${ADMIN_PORT:-5600}"
 
 volumes:
   app_data:
