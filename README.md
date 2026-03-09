@@ -63,6 +63,11 @@ Ports must be valid TCP ports (`1-65535`).
 In Coolify:
 - Map your main domain to the `website` service.
 - Map your admin domain to the `admin` service.
+- Because these services listen on `5500` and `5600`, enter the service URLs with ports in the domain fields:
+  - `http://your-main-domain.com:5500`
+  - `http://admin.your-main-domain.com:5600`
+- Do not enter bare hostnames for these fields on a fresh Coolify app, otherwise Traefik can generate an invalid `Host('') && PathPrefix(...)` rule and return `503 no available server`.
+- Keep `Escape special chars in labels` unchecked unless you explicitly need it for wildcard routing.
 
 ### 5) Deploy
 Click **Deploy** and wait for both services to be healthy.
@@ -98,6 +103,9 @@ Fix:
 - Verify DNS records point to your Coolify server.
 - Verify domain is attached to the correct service.
 - Verify TLS/certificate generation completed.
+- If Coolify proxy logs show `Host('') && PathPrefix(...)`, clear the service domain fields and re-type the full URLs with ports:
+  - `http://your-main-domain.com:5500`
+  - `http://admin.your-main-domain.com:5600`
 
 ### Data is lost after redeploy
 The compose file already uses volumes:
@@ -156,3 +164,20 @@ To enable automatic Coolify deploy from GitHub Actions, set:
 
 - `COOLIFY_WEBHOOK_PROD` (required for main branch deploy)
 - `COOLIFY_WEBHOOK_STAGING` (optional for staging branch)
+
+## Clean Coolify Recreate
+
+If you delete the app and recreate it from scratch, use this exact sequence:
+
+1. Set your Coolify panel URL to a separate subdomain such as `https://panel.your-main-domain.com`.
+2. Create the application with build pack `Docker Compose` and compose path `docker-compose.yml`.
+3. Add environment variables:
+   - `WEBSITE_PORT=5500`
+   - `ADMIN_PORT=5600`
+   - `ADMIN_USER=admin`
+   - `ADMIN_PASS=<strong-password>`
+   - `COOKIE_SECURE=true`
+4. In the two service domain fields, enter:
+   - `http://your-main-domain.com:5500`
+   - `http://admin.your-main-domain.com:5600`
+5. Save, redeploy, then restart the Coolify proxy once if routes were previously broken.

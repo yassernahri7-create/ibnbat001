@@ -11,7 +11,8 @@ services:
       - NODE_ENV=production
       - PORT=${WEBSITE_PORT:-5500}
     ports:
-      - "${WEBSITE_PORT:-5500}:${WEBSITE_PORT:-5500}"
+      # Bind to localhost for safer local/manual debugging; Coolify routes through its proxy.
+      - "127.0.0.1:${WEBSITE_PORT:-5500}:${WEBSITE_PORT:-5500}"
     volumes:
       - app_data:/app/data
       - app_uploads:/app/assets/uploads
@@ -21,7 +22,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 5s
-    # Coolify & Traefik Reverse Proxy Configuration
+    # In Coolify, assign this service domain as: http://your-main-domain.com:5500
 
   admin:
     build:
@@ -37,7 +38,8 @@ services:
       - ADMIN_USER=${ADMIN_USER:-admin}
       - ADMIN_PASS=${ADMIN_PASS:-admin}
     ports:
-      - "${ADMIN_PORT:-5600}:${ADMIN_PORT:-5600}"
+      # Bind to localhost for safer local/manual debugging; Coolify routes through its proxy.
+      - "127.0.0.1:${ADMIN_PORT:-5600}:${ADMIN_PORT:-5600}"
     volumes:
       - app_data:/app/data
       - app_uploads:/app/assets/uploads
@@ -47,7 +49,7 @@ services:
       timeout: 10s
       retries: 3
       start_period: 5s
-    # Coolify & Traefik Reverse Proxy Configuration
+    # In Coolify, assign this service domain as: http://admin.your-main-domain.com:5600
 
 volumes:
   app_data:
