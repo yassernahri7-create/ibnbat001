@@ -1,55 +1,133 @@
-﻿# Ibn Batouta Web
+# Ibn Batouta Web
 
-A lightweight platform for creating professional websites. Includes a main frontend and a management admin panel.
+A lightweight platform for creating professional websites. It includes:
+- `website-server.js` (public website)
+- `admin-server.js` (admin panel)
 
 ## Local Development
 
-You can run the application locally without Docker. The app requires Node.js installed on your machine.
-There are no external dependencies or build steps.
+No build step and no external packages are required.
 
-1. Start the Website Server:
+1. Start website server:
    ```bash
    node website-server.js
    ```
-   *Available at http://localhost:5500*
+   Website: `http://localhost:5500`
 
-2. Start the Admin Server:
+2. Start admin server:
    ```bash
    node admin-server.js
    ```
-   *Available at http://localhost:5600/admin*
+   Admin: `http://localhost:5600/admin`
 
-## Deployment (Docker & Coolify)
+---
 
-This project is fully containerized and ready to deploy on any VPS using Docker or platforms like Coolify.
+## Deploy to Coolify (Step-by-Step)
 
-**Requirements**:
-- Docker and Docker Compose installed (or Coolify active on your server).
+This repository is ready for **Docker Compose** deployment on Coolify.
 
-### Deploying Manually with Docker Compose
+### 1) Prepare repository
+Make sure these files exist in your repo root:
+- `docker-compose.yml`
+- `Dockerfile`
+- `.env.example`
 
-1. Clone the repository on your server.
-2. Copy the example environment file:
-   ```bash
-   cp .env.example .env
-   ```
-3. Edit the `.env` file to customize your ports if needed.
-4. Start the application:
-   ```bash
-   docker-compose up -d --build
-   ```
+### 2) Create project in Coolify
+1. In Coolify, click **New Resource**.
+2. Choose **Application**.
+3. Connect/select your Git repository.
+4. Set **Build Pack** to **Docker Compose**.
+5. Keep the compose file path as `docker-compose.yml`.
 
-### Deploying with Coolify
+### 3) Configure environment variables in Coolify
+Add these variables (use your real domains):
 
-1. Connect your Github repository to Coolify.
-2. Choose **Docker Compose** as the build pack.
-3. Coolify will automatically parse the `docker-compose.yml` file and set up both the website and admin containers.
-4. Add the appropriate environment variables (`WEBSITE_PORT`, `ADMIN_PORT`) or just rely on default values.
-5. In Coolify, bind your domains:
-   - For `ibnbatouta_website`, set your main domain (e.g., `https://ibnbatouta.ma`).
-   - For `ibnbatouta_admin`, set your admin domain (e.g., `https://admin.ibnbatouta.ma`).
-   (*Note: Uncomment the Traefik labels in `docker-compose.yml` if your Coolify setup requires explicit Traefik definitions, otherwise Coolify handles routing automatically.*)
+- `WEBSITE_PORT=5500`
+- `ADMIN_PORT=5600`
+- `WEBSITE_DOMAIN=your-main-domain.com`
+- `ADMIN_DOMAIN=admin.your-main-domain.com`
+
+Ports must be valid TCP ports (`1-65535`).
+
+> Notes:
+> - Internal ports should stay `5500` and `5600` unless you intentionally change them.
+> - Coolify UI should be the single source of truth for domains in this project.
+
+
+### 3.1) Domain format (important)
+Use hostnames only (no path):
+- ✅ `WEBSITE_DOMAIN=ibnbatoutaweb.com`
+- ✅ `ADMIN_DOMAIN=admin.ibnbatoutaweb.com`
+- ❌ `ADMIN_DOMAIN=ibnbatoutaweb.com/admin`
+
+If you configure domains in Coolify UI, Coolify will handle routing automatically; custom Traefik labels in compose are not required.
+
+### 4) Configure domains/routes
+In Coolify:
+- Map your main domain to the `website` service.
+- Map your admin domain to the `admin` service.
+
+### 5) Deploy
+Click **Deploy** and wait for both services to be healthy.
+
+### 6) Validate after deployment
+Check:
+- `https://your-main-domain.com/` loads the website.
+- `https://admin.your-main-domain.com/admin` loads the admin panel.
+- Health checks pass for both services.
+
+---
+
+## Important fix included for Coolify startup
+A startup crash was caused by referencing `PORT` (uppercase) while only `port` (lowercase) was defined in `website-server.js`.
+
+This is now fixed, and the website server correctly listens with:
+- `process.env.PORT` (if provided by Coolify), or
+- fallback to `5500`.
+
+---
+
+## Troubleshooting
+
+### Error: `ReferenceError: PORT is not defined`
+Cause: old image/commit still running.
+
+Fix:
+1. Ensure latest commit is deployed.
+2. Trigger **Redeploy (Rebuild image)** in Coolify.
+3. Confirm logs show: `Server running on 5500` (or your configured port).
+
+### Service starts but domain not reachable
+- Verify DNS records point to your Coolify server.
+- Verify domain is attached to the correct service.
+- Verify TLS/certificate generation completed.
+
+### Data is lost after redeploy
+The compose file already uses volumes:
+- `/app/data`
+- `/app/assets/uploads`
+
+Do not remove volumes unless you intentionally reset data.
+
+---
+
+## Manual Docker Compose Deployment (without Coolify)
+
+```bash
+cp .env.example .env
+# edit .env values if needed
+
+docker compose up -d --build
+```
+
+Check:
+- Website: `http://localhost:5500`
+- Admin: `http://localhost:5600/admin`
 
 ## Data Persistence
 
-Configuration data, project information, and uploaded images are saved natively in the `data/` and `assets/uploads/` directories. In the Docker setup, these folders are mounted as named Docker volumes, ensuring persistent data across container restarts.
+Configuration, contacts, and uploads are stored in:
+- `data/`
+- `assets/uploads/`
+
+In Docker deployment, these are persisted through named volumes.
