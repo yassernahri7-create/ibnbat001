@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   website:
     build:
@@ -21,7 +19,7 @@ services:
     networks:
       - default
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:${WEBSITE_PORT:-5500}"]
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:${WEBSITE_PORT:-5500}"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -40,6 +38,8 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=${ADMIN_PORT:-5600}
+      - ADMIN_USER=${ADMIN_USER:-admin}
+      - ADMIN_PASS=${ADMIN_PASS:-admin}
     ports:
       - "${ADMIN_PORT:-5600}:${ADMIN_PORT:-5600}"
     volumes:
@@ -48,7 +48,7 @@ services:
     networks:
       - default
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:${ADMIN_PORT:-5600}/admin.html"]
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:${ADMIN_PORT:-5600}/admin.html"]
       interval: 30s
       timeout: 10s
       retries: 3

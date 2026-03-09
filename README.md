@@ -16,6 +16,9 @@ No build step and no external packages are required.
 
 2. Start admin server:
    ```bash
+   # Set admin credentials before starting
+   export ADMIN_USER=admin
+   export ADMIN_PASS=change_this_password
    node admin-server.js
    ```
    Admin: `http://localhost:5600/admin`
@@ -46,6 +49,9 @@ Add these variables (use your real domains):
 - `ADMIN_PORT=5600`
 - `WEBSITE_DOMAIN=your-main-domain.com`
 - `ADMIN_DOMAIN=admin.your-main-domain.com`
+- `ADMIN_USER=admin`
+- `ADMIN_PASS=<strong-password>`
+- `COOKIE_SECURE=true` (recommended when admin is only served over HTTPS)
 
 Ports must be valid TCP ports (`1-65535`).
 
@@ -122,3 +128,31 @@ Configuration, contacts, and uploads are stored in:
 - `assets/uploads/`
 
 In Docker deployment, these are persisted through named volumes.
+
+## Automation Scripts
+
+For easier repeatable deployment, use the scripts in `scripts/`.
+
+1. Setup or update `.env` (domain + secure admin password):
+   ```bash
+   pwsh ./scripts/setup-env.ps1 -Domain ibnbatoutaweb.com
+   ```
+
+2. Build, deploy locally, wait for healthy containers, and run smoke checks:
+   ```bash
+   pwsh ./scripts/deploy-local.ps1
+   ```
+
+3. Commit, push, and optionally trigger Coolify webhook:
+   ```bash
+   pwsh ./scripts/push-and-deploy.ps1 -Branch main -Remote origin
+   ```
+   You can pass `-WebhookUrl "<your-coolify-webhook>"` or set `COOLIFY_WEBHOOK_PROD`.
+
+## GitHub Auto Deploy
+
+This repo already includes `.github/workflows/deploy.yml`.
+To enable automatic Coolify deploy from GitHub Actions, set:
+
+- `COOLIFY_WEBHOOK_PROD` (required for main branch deploy)
+- `COOLIFY_WEBHOOK_STAGING` (optional for staging branch)

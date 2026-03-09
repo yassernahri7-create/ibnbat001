@@ -181,7 +181,6 @@
         <div id="galleryContainer" class="grid-2"></div>
       </div>
     </div>
-
     <!-- 4. SECURITY SECTION -->
     <div id="security" class="panel-section">
       <div class="card">
@@ -189,27 +188,16 @@
           <h2><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg> Sécurité du Panneau</h2>
+            </svg> Securite du Panneau</h2>
         </div>
-        <p style="margin-bottom:16px;">Changez vos identifiants de connexion pour protéger l'accès à votre panneau
-          d'administration.</p>
-        <div class="grid-2">
-          <div>
-            <label>Nom d'utilisateur Admin</label>
-            <input type="text" id="adminUser" placeholder="admin">
-          </div>
-          <div>
-            <label>Nouveau Mot de Passe</label>
-            <input type="password" id="adminPass" placeholder="••••••••">
-          </div>
-        </div>
+        <p style="margin-bottom:16px;">La connexion admin est maintenant geree cote serveur.</p>
         <div
           style="background: #fff9db; padding: 12px; border-radius: 8px; border: 1px solid #ffe066; color: #856404; font-size: 0.85rem; display: flex; align-items: center; gap: 10px;">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
             <path
               d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
           </svg>
-          Une fois modifié, vous devrez utiliser ces nouveaux identifiants lors de votre prochaine connexion.
+          Configurez <strong>ADMIN_USER</strong> et <strong>ADMIN_PASS</strong> dans vos variables d'environnement, puis redeployez pour changer les identifiants.
         </div>
       </div>
     </div>

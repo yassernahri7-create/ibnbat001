@@ -29,7 +29,7 @@ EXPOSE 5500 5600
 
 # Healthcheck configuration (can be refined in docker-compose)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget -qO- http://localhost:${PORT:-5500} || exit 1
+  CMD wget -qO- http://127.0.0.1:${PORT:-5500} || exit 1
 
 # Default command (overridden by docker-compose for specific services)
 CMD ["node", "website-server.js"]

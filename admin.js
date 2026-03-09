@@ -1,7 +1,6 @@
 'use strict';
 
 const STORAGE_KEY = 'IbnBatoutaWeb_admin_only_v1';
-const SESSION_KEY = 'IbnBatoutaWeb_admin_session_v1';
 
 // Same default as the frontend to hydrate if empty
 const DEFAULT_SERVICES = [
@@ -13,11 +12,76 @@ const DEFAULT_SERVICES = [
 ];
 
 document.addEventListener('DOMContentLoaded', async () => {
+  const loginOverlay = document.getElementById('loginOverlay');
+  const loginSubmit = document.getElementById('loginSubmit');
+  const loginError = document.getElementById('loginError');
+  const logoutBtn = document.getElementById('logoutBtn');
+
+  async function checkServerSession() {
+    try {
+      const res = await fetch('/api/admin/session?v=' + Date.now(), { cache: 'no-store' });
+      if (!res.ok) return false;
+      const payload = await res.json();
+      return Boolean(payload.authenticated);
+    } catch (e) {
+      return false;
+    }
+  }
+
+  async function loginToServer(user, pass) {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user, pass })
+    });
+    return res.ok;
+  }
+
+  async function logoutFromServer() {
+    try {
+      await fetch('/api/admin/logout', { method: 'POST' });
+    } catch (e) { }
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', async () => {
+      await logoutFromServer();
+      window.location.reload();
+    });
+  }
+
+  const hasSession = await checkServerSession();
+  if (!hasSession) {
+    if (loginOverlay) loginOverlay.style.display = 'flex';
+    if (loginSubmit) {
+      loginSubmit.addEventListener('click', async () => {
+        const u = document.getElementById('loginUser').value.trim();
+        const p = document.getElementById('loginPass').value;
+        const ok = await loginToServer(u, p);
+        if (ok) {
+          window.location.reload();
+          return;
+        }
+        if (loginError) {
+          loginError.style.display = 'block';
+          setTimeout(() => { loginError.style.display = 'none'; }, 3000);
+        }
+      });
+    }
+    return;
+  }
+
+  if (loginOverlay) loginOverlay.style.display = 'none';
+
   let data = getStorage();
 
   // 1. Initial Data Fetch
   try {
     const res = await fetch('/api/config?v=' + Date.now());
+    if (res.status === 401) {
+      window.location.reload();
+      return;
+    }
     if (res.ok) {
       const serverData = await res.json();
       if (serverData && Object.keys(serverData).length) {
@@ -39,43 +103,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (menuToggle) menuToggle.addEventListener('click', toggleSidebar);
   if (overlay) overlay.addEventListener('click', toggleSidebar);
-
-  // 0. AUTHENTICATION CHECK
-  const session = localStorage.getItem(SESSION_KEY);
-  const loginOverlay = document.getElementById('loginOverlay');
-
-  if (!session) {
-    loginOverlay.style.display = 'flex';
-  }
-
-  // Define admin default if missing
-  if (!data.admin) {
-    data.admin = { user: 'admin', pass: 'admin' };
-  }
-
-  // Login Logic
-  document.getElementById('loginSubmit').addEventListener('click', () => {
-    const u = document.getElementById('loginUser').value.trim();
-    const p = document.getElementById('loginPass').value.trim();
-    const errorEl = document.getElementById('loginError');
-
-    if (u === data.admin.user && p === data.admin.pass) {
-      localStorage.setItem(SESSION_KEY, 'true');
-      loginOverlay.style.opacity = '0';
-      setTimeout(() => loginOverlay.style.display = 'none', 300);
-      showToast('Bienvenue ! Connexion réussie.');
-    } else {
-      errorEl.style.display = 'block';
-      setTimeout(() => errorEl.style.display = 'none', 3000);
-    }
-  });
-
-  // Logout Logic
-  document.getElementById('logoutBtn').addEventListener('click', () => {
-    localStorage.removeItem(SESSION_KEY);
-    window.location.reload();
-  });
-
   window.social = data.social || { whatsapp: '', insta: '', fb: '' };
   window.packs = data.services && data.services.length ? data.services : JSON.parse(JSON.stringify(DEFAULT_SERVICES));
   window.gallery = data.projects || [];
@@ -124,11 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   v('igLink', window.social.insta);
   v('fbLink', window.social.fb);
 
-  /* ── 1.1 SECURITY ── */
-  v('adminUser', data.admin.user);
-  v('adminPass', data.admin.pass);
-
-  /* ── 1.2 BRAND & PROMO ── */
+  /* --- 1.2 BRAND & PROMO --- */
   v('logoUrl', window.brand.logo);
   const promoCheck = document.getElementById('promoEnabled');
   if (promoCheck) promoCheck.checked = window.promo.enabled;
@@ -345,8 +368,8 @@ document.addEventListener('DOMContentLoaded', async () => {
       if (typeof p.ar.features === 'string') p.ar.features = p.ar.features.split('\n').filter(Boolean);
     });
 
+    delete data.admin;
     data.social = { whatsapp: val('waNum'), insta: val('igLink'), fb: val('fbLink') };
-    data.admin = { user: val('adminUser'), pass: val('adminPass') };
     data.services = cleanedPacks;
     data.projects = window.gallery;
     data.brand = window.brand;
@@ -360,7 +383,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      if (res.ok) showToast('Sauvegardé sur le serveur !');
+      if (res.status === 401) {
+        showToast('Session expiree. Veuillez vous reconnecter.');
+        setTimeout(() => window.location.reload(), 500);
+        return;
+      }
+      if (res.ok) showToast('Sauvegarde sur le serveur !');
     } catch (e) {
       console.error('Server save failed', e);
       showToast('Erreur serveur (sauvegardé localement)');
