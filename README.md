@@ -47,8 +47,6 @@ Add these variables (use your real domains):
 
 - `WEBSITE_PORT=5500`
 - `ADMIN_PORT=5600`
-- `WEBSITE_DOMAIN=your-main-domain.com`
-- `ADMIN_DOMAIN=admin.your-main-domain.com`
 - `ADMIN_USER=admin`
 - `ADMIN_PASS=<strong-password>`
 - `COOKIE_SECURE=true` (recommended when admin is only served over HTTPS)
@@ -58,15 +56,17 @@ Ports must be valid TCP ports (`1-65535`).
 > Notes:
 > - Internal ports should stay `5500` and `5600` unless you intentionally change them.
 > - Coolify can also manage domains via its UI even when compose labels exist.
+> - `WEBSITE_DOMAIN` and `ADMIN_DOMAIN` are optional helper values for local scripts; the live routing comes from the Coolify domain fields.
 
 ### 4) Configure domains/routes
 In Coolify:
 - Map your main domain to the `website` service.
 - Map your admin domain to the `admin` service.
-- Because these services listen on `5500` and `5600`, enter the service URLs with ports in the domain fields:
-  - `http://your-main-domain.com:5500`
-  - `http://admin.your-main-domain.com:5600`
+- Because these services listen on `5500` and `5600`, enter the full HTTPS service URLs with ports in the domain fields:
+  - `https://your-main-domain.com:5500`
+  - `https://admin.your-main-domain.com:5600`
 - Do not enter bare hostnames for these fields on a fresh Coolify app, otherwise Traefik can generate an invalid `Host('') && PathPrefix(...)` rule and return `503 no available server`.
+- Do not use `http://...` here if you expect Coolify to provision SSL certificates for the domain.
 - Keep `Escape special chars in labels` unchecked unless you explicitly need it for wildcard routing.
 
 ### 5) Deploy
@@ -103,9 +103,9 @@ Fix:
 - Verify DNS records point to your Coolify server.
 - Verify domain is attached to the correct service.
 - Verify TLS/certificate generation completed.
-- If Coolify proxy logs show `Host('') && PathPrefix(...)`, clear the service domain fields and re-type the full URLs with ports:
-  - `http://your-main-domain.com:5500`
-  - `http://admin.your-main-domain.com:5600`
+- If Coolify proxy logs show `Host('') && PathPrefix(...)`, clear the service domain fields and re-type the full HTTPS URLs with ports:
+  - `https://your-main-domain.com:5500`
+  - `https://admin.your-main-domain.com:5600`
 
 ### Data is lost after redeploy
 The compose file already uses volumes:
@@ -170,14 +170,22 @@ To enable automatic Coolify deploy from GitHub Actions, set:
 If you delete the app and recreate it from scratch, use this exact sequence:
 
 1. Set your Coolify panel URL to a separate subdomain such as `https://panel.your-main-domain.com`.
-2. Create the application with build pack `Docker Compose` and compose path `docker-compose.yml`.
-3. Add environment variables:
+2. Point DNS first:
+   - `A panel -> <your server IPv4>`
+   - `A * -> <your server IPv4>` so Coolify-generated subdomains resolve without manual DNS work
+   - Add `AAAA` records only after IPv4 HTTP/HTTPS works cleanly, or ensure your server proxy is fully reachable on IPv6
+3. In the Coolify server/domain settings, set the wildcard domain to your base domain so Coolify can generate working subdomains for each service.
+4. Create the application with build pack `Docker Compose` and compose path `docker-compose.yml`.
+5. Add environment variables:
    - `WEBSITE_PORT=5500`
    - `ADMIN_PORT=5600`
    - `ADMIN_USER=admin`
    - `ADMIN_PASS=<strong-password>`
    - `COOKIE_SECURE=true`
-4. In the two service domain fields, enter:
-   - `http://your-main-domain.com:5500`
-   - `http://admin.your-main-domain.com:5600`
-5. Save, redeploy, then restart the Coolify proxy once if routes were previously broken.
+6. First deploy using Coolify-generated service domains. Use the `Generate Domain` button for each service and verify those generated HTTPS URLs work before adding custom domains.
+7. Once generated domains work, replace them one at a time with your real custom domains:
+   - `https://www.your-main-domain.com:5500`
+   - `https://admin.your-main-domain.com:5600`
+8. Save, redeploy, then restart the Coolify proxy once if routes were previously broken.
+9. Only after `www` works over HTTPS should you add the apex domain, for example:
+   - `https://your-main-domain.com:5500,https://www.your-main-domain.com:5500`
