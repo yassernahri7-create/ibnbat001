@@ -29,6 +29,8 @@ No build step and no external packages are required.
 
 This repository is ready for **Docker Compose** deployment on Coolify.
 
+The Docker setup uses separate image targets for `website` and `admin`, so Coolify can detect the correct internal port for each service.
+
 ### 1) Prepare repository
 Make sure these files exist in your repo root:
 - `docker-compose.yml`

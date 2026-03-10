@@ -3,7 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: production
+      target: website-production
     image: ibnbatouta-website:latest
     restart: unless-stopped
     command: node website-server.js
@@ -28,7 +28,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: production
+      target: admin-production
     image: ibnbatouta-admin:latest
     restart: unless-stopped
     command: node admin-server.js
