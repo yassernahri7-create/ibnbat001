@@ -162,6 +162,7 @@ For easier repeatable deployment, use the scripts in `scripts/`.
 ## GitHub Auto Deploy
 
 This repo already includes `.github/workflows/deploy.yml`.
+The workflow validates the repository and triggers the Coolify deploy webhook after pushes to `main` or `staging`.
 To enable automatic Coolify deploy from GitHub Actions, set:
 
 - `COOLIFY_WEBHOOK_PROD` (required for main branch deploy)
