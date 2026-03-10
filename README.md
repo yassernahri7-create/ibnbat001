@@ -166,7 +166,9 @@ The workflow validates the repository and triggers the Coolify deploy webhook af
 To enable automatic Coolify deploy from GitHub Actions, set:
 
 - `COOLIFY_WEBHOOK_PROD` (required for main branch deploy)
+- `COOLIFY_TOKEN_PROD` (required for main branch deploy)
 - `COOLIFY_WEBHOOK_STAGING` (optional for staging branch)
+- `COOLIFY_TOKEN_STAGING` (optional for staging branch)
 
 ## Clean Coolify Recreate
 

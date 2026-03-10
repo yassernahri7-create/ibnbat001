@@ -40,11 +40,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "${{ secrets.COOLIFY_WEBHOOK_PROD }}" ]; then
-            echo "COOLIFY_WEBHOOK_PROD is not set. Skipping production deploy."
+          if [ -z "${{ secrets.COOLIFY_WEBHOOK_PROD }}" ] || [ -z "${{ secrets.COOLIFY_TOKEN_PROD }}" ]; then
+            echo "COOLIFY_WEBHOOK_PROD or COOLIFY_TOKEN_PROD is not set. Skipping production deploy."
             exit 0
           fi
-          curl --fail --silent --show-error --max-time 30 -X POST "${{ secrets.COOLIFY_WEBHOOK_PROD }}"
+          curl --fail --silent --show-error --max-time 30 \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN_PROD }}" \
+            "${{ secrets.COOLIFY_WEBHOOK_PROD }}"
 
   deploy-staging:
     name: Trigger Staging Deploy
@@ -56,8 +58,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          if [ -z "${{ secrets.COOLIFY_WEBHOOK_STAGING }}" ]; then
-            echo "COOLIFY_WEBHOOK_STAGING is not set. Skipping staging deploy."
+          if [ -z "${{ secrets.COOLIFY_WEBHOOK_STAGING }}" ] || [ -z "${{ secrets.COOLIFY_TOKEN_STAGING }}" ]; then
+            echo "COOLIFY_WEBHOOK_STAGING or COOLIFY_TOKEN_STAGING is not set. Skipping staging deploy."
             exit 0
           fi
-          curl --fail --silent --show-error --max-time 30 -X POST "${{ secrets.COOLIFY_WEBHOOK_STAGING }}"
+          curl --fail --silent --show-error --max-time 30 \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN_STAGING }}" \
+            "${{ secrets.COOLIFY_WEBHOOK_STAGING }}"
