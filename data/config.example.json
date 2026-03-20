@@ -1,0 +1,204 @@
+{
+  "social": {
+    "whatsapp": "0606060606",
+    "insta": "https://www.instagram.com/rrice_cafe_restaurant?igsh=MTlkdDRybHdoNTBkeg%3D%3D",
+    "fb": "https://facebook.com/votrepage"
+  },
+  "services": [
+    {
+      "fr": {
+        "title": "Essai Gratuit — 0 DH",
+        "desc": "Testez le système sans risque avant de vous engager.",
+        "features": [
+          "1 mois d'accès gratuit",
+          "Fonctionnalités complètes",
+          "Sans engagement",
+          "Testez le service"
+        ]
+      },
+      "en": {
+        "title": "Free Trial — 0 DH",
+        "desc": "Experience the system risk-free before you commit.",
+        "features": [
+          "1 month free access",
+          "Full features",
+          "No commitment",
+          "Test the service"
+        ]
+      },
+      "ar": {
+        "title": "تجربة مجانية — 0 درهم",
+        "desc": "جرب النظام بدون مخاطر قبل الالتزام.",
+        "features": [
+          "شهر واحد مجاني",
+          "ميزات كاملة",
+          "بدون التزام",
+          "اختبر الخدمة"
+        ]
+      }
+    },
+    {
+      "fr": {
+        "title": "Plan Annuel — 1900 DH",
+        "desc": "Payez une fois, profitez toute l'année sans stress.",
+        "features": [
+          "Accès total à tous les services",
+          "1 mois GRATUIT inclus",
+          "Support toute l'année",
+          "Assistance prioritaire"
+        ]
+      },
+      "en": {
+        "title": "Yearly Plan — 1900 DH",
+        "desc": "Pay once, enjoy the full year without stress.",
+        "features": [
+          "Full access to all services",
+          "1 month FREE included",
+          "Full year support",
+          "Priority assistance"
+        ]
+      },
+      "ar": {
+        "title": "الخطة السنوية — 1900 درهم",
+        "desc": "ادفع مرة واحدة، واستمتع طوال العام بدون ضغوط.",
+        "features": [
+          "وصول كامل لجميع الخدمات",
+          "شهر مجاني متضمن",
+          "دعم طوال العام",
+          "مساعدة ذات أولوية"
+        ]
+      }
+    },
+    {
+      "fr": {
+        "title": "Plan Mensuel — 300 DH",
+        "desc": "Flexible, payez à l'utilisation.",
+        "features": [
+          "Accès total à tous les services",
+          "Mises à jour continues",
+          "Intégration WhatsApp",
+          "Support inclus"
+        ]
+      },
+      "en": {
+        "title": "Monthly Plan — 300 DH",
+        "desc": "Flexible, pay as you go.",
+        "features": [
+          "Full access to all services",
+          "Continuous updates",
+          "WhatsApp integration",
+          "Support included"
+        ]
+      },
+      "ar": {
+        "title": "خطة شهرية — 300 درهم",
+        "desc": "مرنة، ادفع حسب الاستخدام.",
+        "features": [
+          "وصول كامل لجميع الخدمات",
+          "تحديثات مستمرة",
+          "دمج واتساب",
+          "دعم متضمن"
+        ]
+      }
+    }
+  ],
+  "projects": [
+    {
+      "title": "Restaurant Live Demo",
+      "category": "Restaurant",
+      "link": "https://demo-restaurant.com",
+      "images": [
+        "/assets/uploads/upload_1772950926487.png"
+      ]
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Final Verify Project",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Verify 5500",
+      "category": "Web",
+      "link": "",
+      "images": []
+    },
+    {
+      "title": "Nouveau Projet",
+      "category": "Web",
+      "link": "",
+      "images": []
+    }
+  ],
+  "brand": {
+    "logo": "assets/brand/ibn-batouta-logo.svg"
+  },
+  "promo": {
+    "enabled": true,
+    "text": "20% off it all our products ",
+    "link": "https://chatgpt.com/"
+  },
+  "admin": {
+    "user": "admin"
+  }
+}

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rental Car Website | Ibn Batouta Web</title>
+    <meta name="description"
+        content="Modern websites featuring real-time booking and fleet reservations. Manage cars effortlessly.">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body id="top">
+
+    <!-- Premium Background Layers -->
+    <div class="noise-overlay"></div>
+    <div class="vignette"></div>
+
+    <!-- Animated Background Shapes -->
+    <div class="bg-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="index.html" class="brand">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 22l10-4 10 4L12 2z" />
+                </svg>
+                Ibn Batouta Web
+            </a>
+
+            <!-- Hamburger Menu Toggle -->
+            <button class="mobile-nav-toggle" id="mobile-menu-btn" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav class="main-nav" id="main-nav">
+                <div class="nav-item-dropdown">
+                    <a href="index.html#services" class="dropdown-trigger" data-i18n="nav_services">Services <svg
+                            width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="3" style="margin-left: 4px;">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg></a>
+                    <div class="dropdown-menu">
+                        <a href="service-restaurant.html" data-i18n="service_restaurant">Smart Restaurant Menu</a>
+                        <a href="service-rental.html" data-i18n="service_rental">Rental Car Website</a>
+                        <a href="service-nightclub.html" data-i18n="service_nightclub">Nightclub Promotion</a>
+                        <a href="service-ecommerce.html" data-i18n="service_ecommerce">E-commerce Website</a>
+                    </div>
+                </div>
+                <a href="index.html#pricing" data-i18n="nav_pricing">Pricing</a>
+
+                <!-- Language Dropdown -->
+                <div class="nav-item-dropdown lang-dropdown">
+                    <a href="#" class="dropdown-trigger"><span id="current-lang-text">EN</span> <svg width="12"
+                            height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                            style="margin-left: 4px;">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg></a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="lang-btn" data-lang="en">English</a>
+                        <a href="#" class="lang-btn" data-lang="fr">Français</a>
+                        <a href="#" class="lang-btn" data-lang="ar">العربية</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="header-actions">
+                <a href="https://wa.me/212717430045" target="_blank" class="btn btn-primary btn-glow">Contact Us</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="service-header scroll-anim scroll-fade-up">
+            <div class="container">
+                <h1 class="text-gradient" style="font-size: clamp(2.5rem, 6vw, 4.5rem); margin-bottom: 1rem;"
+                    data-i18n="service_rental">Rental Car Website</h1>
+                <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 600px; margin: 0 auto 2rem;">
+                    Full-featured booking systems for car rental agencies with real-time availability and WhatsApp
+                    management.
+                </p>
+                <button class="btn btn-primary btn-large btn-pulse hover-slide"
+                    onclick="openModal('Rental Car Website')" data-i18n="start_project" data-i18n-suffix=" →">Start
+                    Your Project &rarr;</button>
+
+                <img src="assets/rental_car.png" alt="Rental Car Website App"
+                    class="service-hero-img scroll-anim scroll-zoom" style="transition-delay: 0.2s; display: block;">
+            </div>
+        </section>
+
+        <!-- Visual Explanation -->
+        <section class="section">
+            <div class="container scroll-anim scroll-fade-up">
+                <div class="visual-explanation">
+                    <div class="visual-text">
+                        <h3 data-i18n="what_this_does">What This Service Does</h3>
+                        <p>We build streamlined, ultra-fast platforms that showcase your vehicles gorgeously and allow
+                            clients to book instantly. No more messy spreadsheets.</p>
+                        <ul style="list-style: none; margin-bottom: 2rem; color: var(--text-main);">
+                            <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><svg
+                                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                                    stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg> Real-time availability tracking</li>
+                            <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><svg
+                                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                                    stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg> Document uploading & collection</li>
+                            <li style="margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;"><svg
+                                    width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--primary)"
+                                    stroke-width="2">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg> Premium user-experience layout</li>
+                        </ul>
+                    </div>
+                    <div class="visual-image-container scroll-anim scroll-slide-left">
+                        <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?auto=format&fit=crop&w=800&q=80"
+                            alt="Fleet tracking dashboard on tablet" style="width: 100%; height: auto; display: block;">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="section section-transparent">
+            <div class="container">
+                <div class="section-header scroll-anim scroll-fade-up">
+                    <h2 data-i18n="why_upgrade">Why Upgrade?</h2>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card scroll-anim scroll-slide-up interactive-card">
+                        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                                <polyline points="17 6 23 6 23 12"></polyline>
+                            </svg></div>
+                        <h4>Increase Bookings</h4>
+                        <p>Frictionless checkout translates directly to higher end-of-month quotas.</p>
+                    </div>
+                    <div class="benefit-card scroll-anim scroll-slide-up interactive-card"
+                        style="transition-delay: 0.1s;">
+                        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                                <polyline points="2 17 12 22 22 17"></polyline>
+                                <polyline points="2 12 12 17 22 12"></polyline>
+                            </svg></div>
+                        <h4>Fleet Management</h4>
+                        <p>Control pricing, vehicle availability, and fleet expansion easily.</p>
+                    </div>
+                    <div class="benefit-card scroll-anim scroll-slide-up interactive-card"
+                        style="transition-delay: 0.2s;">
+                        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path
+                                    d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                </path>
+                            </svg></div>
+                        <h4>Credibility</h4>
+                        <p>Customers trust agencies that operate with top-tier digital ecosystems.</p>
+                    </div>
+                    <div class="benefit-card scroll-anim scroll-slide-up interactive-card"
+                        style="transition-delay: 0.3s;">
+                        <div class="icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                            </svg></div>
+                        <h4>Deposit Security</h4>
+                        <p>Secure direct channels and structured terms before keys change hands.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Work / Live Demo -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header scroll-anim scroll-fade-up">
+                    <h2 data-i18n="live_demo">Live Demo</h2>
+                    <p>Experience our fleet management portals in real-time.</p>
+                </div>
+                <div class="portfolio-grid" data-category="Rental">
+                    <div class="portfolio-card scroll-anim scroll-slide-left">
+                        <img src="https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&w=600&q=80"
+                            alt="Exotic Car Website Example" class="portfolio-img">
+                        <div class="portfolio-content">
+                            <h4>Casablanca Auto Fleet</h4>
+                            <p>Car rental booking system with real-time reservations.</p>
+                            <a href="https://demo.ibnbatouta.com/rental" target="_blank" class="demo-btn"
+                                data-i18n="view_live_demo" data-i18n-suffix=" →">View Live Demo &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="portfolio-card scroll-anim scroll-slide-right" style="transition-delay: 0.1s;">
+                        <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80"
+                            alt="Fleet Cars Example" class="portfolio-img">
+                        <div class="portfolio-content">
+                            <h4>Marrakech Luxury Rentals</h4>
+                            <p>Premium car fleet platform with document uploading.</p>
+                            <a href="https://demo.ibnbatouta.com/luxury" target="_blank" class="demo-btn"
+                                data-i18n="view_live_demo" data-i18n-suffix=" →">View Live Demo &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works -->
+        <section class="section section-transparent">
+            <div class="container">
+                <div class="section-header scroll-anim scroll-fade-up">
+                    <h2 data-i18n="how_it_works">How It Works</h2>
+                </div>
+
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    <div class="timeline-step scroll-anim scroll-slide-left">
+                        <div class="timeline-icon pulse-anim"><span
+                                style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">1</span></div>
+                        <div class="timeline-content">
+                            <h3>Onboarding Fleet</h3>
+                            <p>You export your car list, pricing schemas, and rules. We design the wireframe.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-step scroll-anim scroll-slide-up" style="transition-delay: 0.2s;">
+                        <div class="timeline-icon pulse-anim"><span
+                                style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">2</span></div>
+                        <div class="timeline-content">
+                            <h3>System Construction</h3>
+                            <p>We deploy the complex backend reservation system hidden behind a beautiful UI.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-step scroll-anim scroll-slide-right" style="transition-delay: 0.4s;">
+                        <div class="timeline-icon pulse-anim"><span
+                                style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">3</span></div>
+                        <div class="timeline-content">
+                            <h3>Start Handing Keys</h3>
+                            <p>Watch as direct bookings bypass third-party platforms entirely.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="floating-social-menu">
+        <a href="https://wa.me/212717430045" class="social-btn wa hover-float" target="_blank" title="WhatsApp"><svg
+                width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path
+                    d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                </path>
+            </svg></a>
+        <a href="https://www.instagram.com/websolution0101" class="social-btn ig hover-float" target="_blank"
+            title="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="2">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg></a>
+        <a href="https://facebook.com/votrepage" class="social-btn fb hover-float" target="_blank" title="Facebook">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+            </svg>
+        </a>
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <h3>Ibn Batouta Web</h3>
+                <p class="phone-text" style="color: var(--secondary); font-weight: 600;">+212 717 430 045</p>
+                <div class="footer-socials">
+                    <a href="https://wa.me/212717430045" class="social-btn wa" target="_blank" title="WhatsApp">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="https://www.instagram.com/websolution0101" class="social-btn ig" target="_blank"
+                        title="Instagram">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="https://facebook.com/votrepage" class="social-btn fb" target="_blank" title="Facebook">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="flowModal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-header">
+                <div class="progress-bar">
+                    <div class="step active" id="step1-indicator">1</div>
+                    <div class="step-line" id="line1"></div>
+                    <div class="step" id="step2-indicator">2</div>
+                    <div class="step-line" id="line2"></div>
+                    <div class="step" id="step3-indicator">3</div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="step1" class="modal-step active">
+                    <h3>Let's build your <span id="selectedServiceText"
+                            class="text-primary text-gradient">Project</span></h3>
+                    <p>You're one step closer to automating your business.</p>
+                    <div class="modal-actions-center"><button class="btn btn-primary btn-large hover-slide"
+                            onclick="nextStep(2)">Start My Project &rarr;</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

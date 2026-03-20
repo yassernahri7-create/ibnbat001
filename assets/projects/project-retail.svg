@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f3a4c"/>
+      <stop offset="100%" stop-color="#0d8db6"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="600" fill="url(#bg)"/>
+  <rect x="70" y="70" width="820" height="460" rx="24" fill="#f5fbff"/>
+  <rect x="110" y="120" width="300" height="36" rx="10" fill="#cfe9f5"/>
+  <rect x="110" y="180" width="520" height="16" rx="8" fill="#e5f2f8"/>
+  <rect x="110" y="208" width="460" height="16" rx="8" fill="#e5f2f8"/>
+  <rect x="110" y="250" width="180" height="42" rx="14" fill="#0d8db6"/>
+  <rect x="660" y="130" width="190" height="300" rx="18" fill="#d9edf7"/>
+  <text x="110" y="350" font-family="Sora,Arial" font-size="44" fill="#0d2c3a">Nour Market</text>
+</svg>

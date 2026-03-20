@@ -1,0 +1,14 @@
+node_modules/
+*.log
+.DS_Store
+.env
+dist/
+build/
+.gemini/
+.agent/
+.agents/
+/tmp/
+data/config.json
+data/contacts.json
+assets/uploads/
+

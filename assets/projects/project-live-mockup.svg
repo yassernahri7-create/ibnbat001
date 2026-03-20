@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080">
+  <rect width="1080" height="1080" fill="#ebe5df"/>
+  <text x="540" y="110" text-anchor="middle" font-family="Arial, sans-serif" font-size="62" fill="#1c1a1b">We're live now!</text>
+  <text x="540" y="190" text-anchor="middle" font-family="Georgia, serif" font-size="108" fill="#1c1a1b">NEW WEBSITE</text>
+  <text x="540" y="255" text-anchor="middle" font-family="cursive" font-size="72" fill="#1c1a1b">Check out our new website</text>
+
+  <rect x="215" y="325" width="650" height="430" rx="10" fill="#22272d"/>
+  <rect x="225" y="336" width="630" height="392" rx="4" fill="#f7f3ed"/>
+  <rect x="300" y="390" width="360" height="42" fill="#f2ebe1"/>
+  <text x="300" y="470" font-family="Georgia, serif" font-size="60" fill="#1b1a1b">Professional and</text>
+  <text x="300" y="535" font-family="Georgia, serif" font-size="60" fill="#1b1a1b">Business Website</text>
+  <text x="300" y="600" font-family="Georgia, serif" font-size="60" fill="#1b1a1b">Templates</text>
+  <rect x="665" y="430" width="150" height="120" fill="#d8bea6"/>
+  <rect x="665" y="560" width="72" height="88" fill="#d0ae92"/>
+  <rect x="744" y="560" width="72" height="88" fill="#c89c7f"/>
+
+  <rect x="80" y="560" width="290" height="200" rx="12" fill="#1f2429"/>
+  <rect x="90" y="570" width="270" height="170" rx="4" fill="#f7f3ed"/>
+  <rect x="120" y="620" width="150" height="30" fill="#f2ebe1"/>
+  <text x="120" y="690" font-family="Georgia, serif" font-size="46" fill="#1b1a1b">Business</text>
+
+  <rect x="730" y="530" width="260" height="320" rx="20" fill="#1f2429"/>
+  <rect x="744" y="548" width="232" height="282" rx="8" fill="#f7f3ed"/>
+  <rect x="760" y="590" width="200" height="120" fill="#e9ddcf"/>
+  <text x="760" y="755" font-family="Georgia, serif" font-size="42" fill="#1b1a1b">Business</text>
+
+  <rect x="500" y="680" width="110" height="230" rx="28" fill="#1f2429"/>
+  <rect x="510" y="700" width="90" height="180" rx="10" fill="#f7f3ed"/>
+  <rect x="520" y="720" width="70" height="70" fill="#e9ddcf"/>
+
+  <rect x="250" y="960" width="580" height="72" rx="18" fill="#fff"/>
+  <circle cx="295" cy="995" r="14" stroke="#1b1a1b" stroke-width="5" fill="none"/>
+  <line x1="305" y1="1005" x2="316" y2="1016" stroke="#1b1a1b" stroke-width="5"/>
+  <text x="360" y="1005" font-family="Arial, sans-serif" font-size="44" fill="#2b2a2b">www.reallygreatsite.com</text>
+</svg>

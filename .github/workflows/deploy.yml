@@ -1,0 +1,67 @@
+name: Deploy to Coolify
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+jobs:
+  validate:
+    name: Validate Repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify critical files
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f Dockerfile
+          test -f docker-compose.yml
+          test -f website-server.js
+          test -f admin-server.js
+
+      - name: Syntax check servers
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check website-server.js
+          node --check admin-server.js
+
+  deploy-production:
+    name: Trigger Production Deploy
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify production webhook
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${{ secrets.COOLIFY_WEBHOOK_PROD }}" ] || [ -z "${{ secrets.COOLIFY_TOKEN_PROD }}" ]; then
+            echo "COOLIFY_WEBHOOK_PROD or COOLIFY_TOKEN_PROD is not set. Skipping production deploy."
+            exit 0
+          fi
+          curl --fail --silent --show-error --max-time 30 \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN_PROD }}" \
+            "${{ secrets.COOLIFY_WEBHOOK_PROD }}"
+
+  deploy-staging:
+    name: Trigger Staging Deploy
+    needs: validate
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify staging webhook
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -z "${{ secrets.COOLIFY_WEBHOOK_STAGING }}" ] || [ -z "${{ secrets.COOLIFY_TOKEN_STAGING }}" ]; then
+            echo "COOLIFY_WEBHOOK_STAGING or COOLIFY_TOKEN_STAGING is not set. Skipping staging deploy."
+            exit 0
+          fi
+          curl --fail --silent --show-error --max-time 30 \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN_STAGING }}" \
+            "${{ secrets.COOLIFY_WEBHOOK_STAGING }}"
