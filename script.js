@@ -35,7 +35,7 @@ function hydrateWebsite() {
   if (social) {
     if (social.whatsapp && social.whatsapp.trim() !== '') {
       const waUrl = `https://wa.me/${social.whatsapp.replace(/[^0-9]/g, '')}`;
-      document.querySelectorAll('.social-btn.wa').forEach(el => el.href = waUrl);
+      document.querySelectorAll('.social-btn.wa, .wa-link').forEach(el => el.href = waUrl);
       document.querySelectorAll('.phone-text').forEach(el => el.textContent = '+' + social.whatsapp);
     }
     if (social.fb && social.fb.trim() !== '') {
