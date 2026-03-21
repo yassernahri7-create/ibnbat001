@@ -137,17 +137,57 @@ function renderPortfolio(projects) {
     // If no projects in this category, keep fallback HTML
     if (filtered.length === 0) return;
 
-    container.innerHTML = filtered.map((p, i) => `
-      <div class="portfolio-card scroll-anim ${i % 2 === 0 ? 'scroll-slide-left' : 'scroll-slide-right'} is-visible observed" style="transition-delay: ${0.1 * i}s;">
-        <img src="${p.images?.[0] || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80'}" alt="${p.title}" class="portfolio-img">
-        <div class="portfolio-content">
-          <h4>${p.title}</h4>
-          <p>${p.category}</p>
-          <a href="${p.link || '#'}" target="_blank" class="demo-btn" data-i18n="view_live_demo" data-i18n-suffix=" &rarr;">View Live Demo &rarr;</a>
+    container.innerHTML = filtered.map((p, i) => {
+      // Escape single quotes for the inline onclick handler
+      const safeTitle = (p.title || '').replace(/'/g, "\\'");
+      const safeCat = (p.category || '').replace(/'/g, "\\'");
+      const safeImg = (p.images?.[0] || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80').replace(/'/g, "\\'");
+      const safeLink = (p.link || '#').replace(/'/g, "\\'");
+
+      return `
+      <div class="portfolio-card scroll-anim ${i % 2 === 0 ? 'scroll-slide-left' : 'scroll-slide-right'} is-visible observed" style="transition-delay: ${0.1 * i}s;" onclick="openPortfolioModal('${safeTitle}', '${safeCat}', '${safeImg}', '${safeLink}')">
+        <img src="${safeImg}" alt="${safeTitle}" class="portfolio-img">
+        <div class="portfolio-content pointer-none">
+          <h4>${safeTitle}</h4>
+          <p>${safeCat}</p>
+          <span class="demo-btn" data-i18n="view_live_demo" data-i18n-suffix=" &rarr;">View Live Demo &rarr;</span>
         </div>
       </div>
-    `).join('');
+    `}).join('');
   });
+}
+
+function openPortfolioModal(title, category, img, link) {
+  let modal = document.getElementById('portfolio-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'portfolio-modal';
+    modal.onclick = function (e) { if (e.target === modal) closePortfolioModal(); };
+    modal.innerHTML = `
+      <div class="portfolio-modal-content">
+        <button class="portfolio-modal-close" onclick="closePortfolioModal()">&times;</button>
+        <img id="pm-img" src="" alt="Project">
+        <h3 id="pm-title"></h3>
+        <p id="pm-category"></p>
+        <a id="pm-link" class="btn btn-primary btn-pulse" href="#" target="_blank">View Live Demo &rarr;</a>
+      </div>
+    `;
+    document.body.appendChild(modal);
+  }
+
+  document.getElementById('pm-img').src = img;
+  document.getElementById('pm-title').textContent = title;
+  document.getElementById('pm-category').textContent = category;
+  document.getElementById('pm-link').href = link;
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden'; // prevent background scrolling
+}
+
+function closePortfolioModal() {
+  const modal = document.getElementById('portfolio-modal');
+  if (modal) modal.style.display = 'none';
+  document.body.style.overflow = '';
 }
 
 /* 

@@ -1562,8 +1562,107 @@ ul {
 
 @media (max-width: 500px) {
   .portfolio-grid-dense {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* =========================================
+   PORTFOLIO LIGHTBOX MODAL
+   ========================================= */
+#portfolio-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.portfolio-modal-content {
+  background: rgba(15, 23, 42, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  max-width: 600px;
+  width: 100%;
+  padding: 30px;
+  position: relative;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 40px rgba(99, 102, 241, 0.2);
+  animation: modal-pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes modal-pop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.portfolio-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.portfolio-modal-close:hover {
+  color: #fff;
+}
+
+#pm-img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+  max-height: 40vh;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+#pm-title {
+  font-size: 2rem;
+  margin-bottom: 5px;
+  color: #fff;
+}
+
+#pm-category {
+  color: var(--primary);
+  margin-bottom: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+#pm-link {
+  display: inline-block;
+  padding: 18px 40px;
+  font-size: 1.3rem;
+  box-shadow: 0 10px 20px -5px rgba(99, 102, 241, 0.4);
+  width: 100%;
+  box-sizing: border-box;
+  transition: transform 0.3s;
+}
+
+#pm-link:hover {
+  transform: translateY(-3px);
 }
 
 .portfolio-card {
@@ -1576,6 +1675,7 @@ ul {
   display: flex;
   flex-direction: column;
   backdrop-filter: blur(5px);
+  cursor: pointer;
 }
 
 .portfolio-card:hover {
