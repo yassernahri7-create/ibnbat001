@@ -126,27 +126,28 @@ function renderPricing(services) {
 }
 
 function renderPortfolio(projects) {
-  const container = document.querySelector('.portfolio-grid');
-  if (!container) return;
+  const containers = document.querySelectorAll('.portfolio-grid');
+  if (containers.length === 0) return;
 
-  const category = container.getAttribute('data-category');
-  const filtered = category ? projects.filter(p => p.category === category) : projects;
+  containers.forEach(container => {
+    const category = container.getAttribute('data-category');
+    // If no data-category exists, show all projects (Global grid)
+    const filtered = category ? projects.filter(p => p.category === category) : projects;
 
-  // If no projects in this category, keep the hardcoded fallback HTML
-  if (filtered.length === 0) {
-    return;
-  }
+    // If no projects in this category, keep fallback HTML
+    if (filtered.length === 0) return;
 
-  container.innerHTML = filtered.map((p, i) => `
-    <div class="portfolio-card scroll-anim ${i % 2 === 0 ? 'scroll-slide-left' : 'scroll-slide-right'} is-visible observed" style="transition-delay: ${0.1 * i}s;">
-      <img src="${p.images?.[0] || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80'}" alt="${p.title}" class="portfolio-img">
-      <div class="portfolio-content">
-        <h4>${p.title}</h4>
-        <p>${p.category}</p>
-        <a href="${p.link || '#'}" target="_blank" class="demo-btn" data-i18n="view_live_demo" data-i18n-suffix=" &rarr;">View Live Demo &rarr;</a>
+    container.innerHTML = filtered.map((p, i) => `
+      <div class="portfolio-card scroll-anim ${i % 2 === 0 ? 'scroll-slide-left' : 'scroll-slide-right'} is-visible observed" style="transition-delay: ${0.1 * i}s;">
+        <img src="${p.images?.[0] || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80'}" alt="${p.title}" class="portfolio-img">
+        <div class="portfolio-content">
+          <h4>${p.title}</h4>
+          <p>${p.category}</p>
+          <a href="${p.link || '#'}" target="_blank" class="demo-btn" data-i18n="view_live_demo" data-i18n-suffix=" &rarr;">View Live Demo &rarr;</a>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  });
 }
 
 /* 

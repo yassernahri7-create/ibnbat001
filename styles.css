@@ -1548,6 +1548,24 @@ ul {
   margin-top: 3rem;
 }
 
+.portfolio-grid-dense {
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 992px) {
+  .portfolio-grid-dense {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .portfolio-grid-dense {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
 .portfolio-card {
   background: rgba(15, 23, 42, 0.6);
   border-radius: var(--radius-lg);
