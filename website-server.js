@@ -17,7 +17,8 @@ const WEBSITE_ALLOWED_EXACT = new Set([
   "/service-restaurant.html",
   "/service-rental.html",
   "/service-nightclub.html",
-  "/service-ecommerce.html"
+  "/service-ecommerce.html",
+  "/translations.js"
 ]);
 const WEBSITE_ALLOWED_PREFIXES = ["/assets/"];
 
