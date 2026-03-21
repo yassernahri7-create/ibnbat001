@@ -272,6 +272,9 @@ function initMobileNav() {
   const navLinks = nav.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
+      // Don't close the menu if it's a dropdown trigger (let the user see the languages/services)
+      if (link.classList.contains('dropdown-trigger')) return;
+
       btn.classList.remove('active');
       nav.classList.remove('active');
       document.body.classList.remove('nav-open');
