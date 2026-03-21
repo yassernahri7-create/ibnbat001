@@ -182,11 +182,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       return `
       <div class="service-item">
-        <div class="item-actions">
-          <button class="btn btn-move" onclick="movePack(${i}, -1)" ${i === 0 ? 'disabled' : ''}>&uarr;</button>
-          <button class="btn btn-move" onclick="movePack(${i}, 1)" ${i === window.packs.length - 1 ? 'disabled' : ''}>&darr;</button>
-          <button class="btn btn-delete remove-pack" data-i="${i}">Supprimer</button>
-        </div>
         <h3 style="margin-bottom:16px;">Plan / Pack #${i + 1}</h3>
         
         <div class="lang-tabs" id="tabGroup_${i}">
@@ -221,23 +216,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       </div>
       `;
     }).join('');
-
-    packsContainer.querySelectorAll('.remove-pack').forEach(btn => {
-      btn.addEventListener('click', () => {
-        window.packs.splice(btn.dataset.i, 1);
-        renderPacks();
-        autoSave('Plan supprimé avec succès !');
-      });
-    });
   }
-
-  window.movePack = function (i, dir) {
-    const target = i + dir;
-    if (target < 0 || target >= window.packs.length) return;
-    [window.packs[i], window.packs[target]] = [window.packs[target], window.packs[i]];
-    renderPacks();
-    autoSave();
-  };
 
   window.switchPackLang = function (idx, lang) {
     const group = document.getElementById(`tabGroup_${idx}`);
