@@ -1985,13 +1985,11 @@ ul {
   }
 
   .pricing-grid {
-    display: flex !important;
-    overflow-x: auto !important;
-    scroll-snap-type: x mandatory;
-    gap: 1.25rem;
-    padding: 1rem 1.5rem 3rem;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 2rem;
+    padding: 1rem 1rem 3rem;
+    overflow-x: visible !important;
     margin-top: 1rem;
   }
 
@@ -2000,14 +1998,19 @@ ul {
   }
 
   .pricing-card {
-    min-width: 88%;
-    /* Increased for better text fitting */
-    scroll-snap-align: center;
-    flex-shrink: 0;
+    width: 100%;
+    min-width: auto;
     padding: 2rem 1.5rem;
-    background: rgba(15, 23, 42, 0.5);
+    background: rgba(15, 23, 42, 0.6);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.15);
+  }
+
+  .pricing-card.highlighted {
+    border: 1px solid var(--primary);
+    box-shadow: 0 15px 40px rgba(99, 102, 241, 0.3);
   }
 
   .plan-name {
@@ -2031,31 +2034,7 @@ ul {
   }
 
   .pricing-slider-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--secondary);
-    font-size: 0.85rem;
-    font-weight: 600;
-    opacity: 0.8;
-  }
-
-  .pricing-slider-indicator svg {
-    animation: slideHint 1.5s infinite;
-  }
-
-  @keyframes slideHint {
-
-    0%,
-    100% {
-      transform: translateX(0);
-    }
-
-    50% {
-      transform: translateX(5px);
-    }
+    display: none !important;
   }
 
   .pricing-hero-card {
