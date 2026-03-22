@@ -398,22 +398,28 @@ function closeModal() {
 
 function nextStep(stepNumber) {
   if (stepNumber === 3) {
+    const clientNameInput = document.getElementById('clientNameInput');
     const bizNameInput = document.getElementById('bizNameInput');
-    const cityInput = document.getElementById('bizCityInput');
-    const bizName = bizNameInput ? bizNameInput.value.trim() : '';
-    const city = cityInput ? cityInput.value.trim() : '';
+    const clientPhoneInput = document.getElementById('clientPhoneInput');
 
-    if (!bizName || !city) {
-      alert("Please fill in your Business Name and City to continue.");
+    const clientName = clientNameInput ? clientNameInput.value.trim() : '';
+    const bizName = bizNameInput ? bizNameInput.value.trim() : '';
+    const clientPhone = clientPhoneInput ? clientPhoneInput.value.trim() : '';
+
+    if (!clientName || !clientPhone) {
+      alert("Please fill in your Name and Phone Number to continue.");
       return;
     }
 
     const summaryService = document.getElementById('summary-service');
+    const summaryClientName = document.getElementById('summary-client-name');
     const summaryName = document.getElementById('summary-name');
-    const summaryCity = document.getElementById('summary-city');
-    if (summaryService) summaryService.textContent = currentService;
-    if (summaryName) summaryName.textContent = bizName;
-    if (summaryCity) summaryCity.textContent = city;
+    const summaryPhone = document.getElementById('summary-phone');
+
+    if (summaryService) summaryService.textContent = currentService || 'Custom Project';
+    if (summaryClientName) summaryClientName.textContent = clientName;
+    if (summaryName) summaryName.textContent = bizName || 'N/A';
+    if (summaryPhone) summaryPhone.textContent = clientPhone;
   }
 
   goToStep(stepNumber);
@@ -451,20 +457,21 @@ function goToStep(stepNumber) {
 }
 
 function submitFlow() {
-  const bizTypeInput = document.getElementById('bizTypeInput');
+  const clientNameInput = document.getElementById('clientNameInput');
   const bizNameInput = document.getElementById('bizNameInput');
-  const cityInput = document.getElementById('bizCityInput');
+  const clientPhoneInput = document.getElementById('clientPhoneInput');
   const needsInput = document.getElementById('bizNeedsInput');
 
-  const bizType = bizTypeInput ? bizTypeInput.value : '';
+  const clientName = clientNameInput ? clientNameInput.value.trim() : '';
   const bizName = bizNameInput ? bizNameInput.value.trim() : '';
-  const city = cityInput ? cityInput.value.trim() : '';
-  const needs = needsInput ? needsInput.value : '';
+  const clientPhone = clientPhoneInput ? clientPhoneInput.value.trim() : '';
+  const needs = needsInput ? needsInput.value.trim() : '';
 
-  const msg = `Hello, I'm interested in the [${currentService}].\n\nBusiness: ${bizName}\nType: ${bizType}\nCity: ${city}\nDetails: ${needs}\n\nI want to start this project!`;
+  const msg = `🚀 *New Service Ticket*\n\n*Service Req:* ${currentService || 'Custom Project'}\n*Client Name:* ${clientName}\n*Business:* ${bizName || 'N/A'}\n*Phone:* ${clientPhone}\n\n*Details:*\n${needs}\n\nI want to start this project!`;
 
-  const waNum = '212717430045';
-  const url = `https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`;
+  const waNum = window.config?.social?.whatsapp || '212717430045';
+  const cleanNum = waNum.replace(/[^0-9]/g, '');
+  const url = `https://wa.me/${cleanNum}?text=${encodeURIComponent(msg)}`;
 
   window.open(url, '_blank');
   closeModal();
