@@ -185,9 +185,8 @@ function readConfigObject() {
     const raw = fs.readFileSync(configPath, "utf8");
     const parsed = JSON.parse(raw || "{}");
 
-    // Auto-heal legacy plans: If we have 5 plans, or if branding is old (Yearly Plan), reset to the 3 new Super bundles
-    const isLegacy = (parsed.services && parsed.services.length === 5) ||
-      (parsed.services && parsed.services[1] && parsed.services[1].en && parsed.services[1].en.title && parsed.services[1].en.title.includes("Yearly Plan"));
+    // Auto-heal legacy plans: Force the 3 new Super bundles on the first boot
+    const isLegacy = !parsed._super_bundle_v1;
 
     if (isLegacy) {
       console.log("Auto-healing legacy config to Super Plan 3-pack...");
@@ -209,6 +208,7 @@ function readConfigObject() {
         }
       ];
       parsed.services = newServices;
+      parsed._super_bundle_v1 = true;
       try { fs.writeFileSync(configPath, JSON.stringify(parsed, null, 2), "utf8"); } catch (e) { }
     }
     if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {

@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <div class="pack-lang-content" id="pack_${i}_fr">
           <div class="grid-2">
-            <div><label>Titre & Prix (ex: Site Pro — 999 DH)</label><input type="text" value="${esc(pack.fr.title)}" onchange="window.packs[${i}].fr.title=this.value; autoSave()"></div>
+            <div><label>Titre & Prix (ex: Super Plan — 1600 DH)</label><input type="text" value="${esc(pack.fr.title)}" onchange="window.packs[${i}].fr.title=this.value; autoSave()"></div>
             <div><label>Description courte (FR)</label><input type="text" value="${esc(pack.fr.desc)}" onchange="window.packs[${i}].fr.desc=this.value; autoSave()"></div>
           </div>
           <div><label>Fonctionnalités incluses (une par ligne)</label><textarea rows="3" onchange="window.packs[${i}].fr.features=this.value; autoSave()">${esc(renderFeatures(pack.fr))}</textarea></div>
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         <div class="pack-lang-content" id="pack_${i}_en" style="display:none;">
           <div class="grid-2">
-            <div><label>Title & Price (ex: Pro Site — 999 DH)</label><input type="text" value="${esc(pack.en.title)}" onchange="window.packs[${i}].en.title=this.value; autoSave()"></div>
+            <div><label>Title & Price (ex: Super Plan — 1600 DH)</label><input type="text" value="${esc(pack.en.title)}" onchange="window.packs[${i}].en.title=this.value; autoSave()"></div>
             <div><label>Short Description (EN)</label><input type="text" value="${esc(pack.en.desc)}" onchange="window.packs[${i}].en.desc=this.value; autoSave()"></div>
           </div>
           <div><label>Included Features (one per line)</label><textarea rows="3" onchange="window.packs[${i}].en.features=this.value; autoSave()">${esc(renderFeatures(pack.en))}</textarea></div>
