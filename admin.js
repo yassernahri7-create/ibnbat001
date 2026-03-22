@@ -258,53 +258,70 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   function renderGallery() {
     galleryContainer.innerHTML = window.gallery.map((item, i) => {
+      const displayImg = item.image || (item.images && item.images[0]) || '';
+
       return `
-      <div class="project-item card">
-        <div class="item-actions">
-           <button class="btn btn-delete remove-gal" data-i="${i}">Supprimer</button>
+      <div class="project-card-admin">
+        <div class="project-preview-img">
+          ${displayImg ? `<img src="${displayImg}" alt="Preview">` : `<div class="no-img-placeholder">Aucune image</div>`}
         </div>
-        <div class="grid-2">
-           <div><label>Titre du Projet</label><input type="text" value="${esc(item.title)}" onchange="window.gallery[${i}].title=this.value; autoSave()"></div>
-           <div>
-              <label>Service (Catégorie)</label>
-              <select onchange="window.gallery[${i}].category=this.value; autoSave()" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border-color); border-radius: 8px; background: #fff; font-family: inherit;">
-                <option value="Restaurant" ${item.category === 'Restaurant' ? 'selected' : ''}>Menu Restaurant</option>
-                <option value="Rental" ${item.category === 'Rental' ? 'selected' : ''}>Location de Voitures (Rental)</option>
-                <option value="Nightclub" ${item.category === 'Nightclub' ? 'selected' : ''}>Boîte de Nuit (Nightclub)</option>
-                <option value="Ecommerce" ${item.category === 'Ecommerce' ? 'selected' : ''}>E-commerce / Boutique</option>
-                <option value="Other" ${!['Restaurant', 'Rental', 'Nightclub', 'Ecommerce'].includes(item.category) ? 'selected' : ''}>Autre / Non classé</option>
-              </select>
-           </div>
-        </div>
-        <div><label>Lien du projet (URL d'accès)</label><input type="text" value="${esc(item.link)}" placeholder="https://..." onchange="window.gallery[${i}].link=this.value; autoSave()"></div>
         
-        <div class="upload-area">
-          <label>Images du projet (Choisir depuis l'ordinateur/téléphone)</label>
-          <div class="file-input-wrapper">
-            <button class="btn btn-primary">📁 Sélectionner des images</button>
-            <input type="file" multiple accept="image/*" onchange="handleImageUpload(${i}, this)">
+        <div class="project-admin-content">
+          <div class="field-group">
+            <label>Titre du Projet</label>
+            <input type="text" value="${esc(item.title)}" onchange="window.gallery[${i}].title=this.value; autoSave()">
           </div>
-          <div class="gal-thumbs-grid" id="galGrid_${i}">
-            ${(item.images || []).map((img, idx) => `
-              <div class="gal-thumb">
-                <img src="${img}" alt="preview">
-                <button class="gal-thumb-del" onclick="removeGalImg(${i}, ${idx})">&times;</button>
-              </div>
-            `).join('')}
+
+          <div class="field-group">
+            <label>Service (Catégorie)</label>
+            <select onchange="window.gallery[${i}].category=this.value; autoSave()" style="width: 100%; padding: 0.75rem; border: 1px solid var(--border); border-radius: 8px; background: #f8fafc; font-family: inherit;">
+              <option value="Restaurant" ${item.category === 'Restaurant' ? 'selected' : ''}>Menu Restaurant</option>
+              <option value="Rental" ${item.category === 'Rental' ? 'selected' : ''}>Location de Voitures</option>
+              <option value="Nightclub" ${item.category === 'Nightclub' ? 'selected' : ''}>Boîte de Nuit</option>
+              <option value="Ecommerce" ${item.category === 'Ecommerce' ? 'selected' : ''}>E-commerce</option>
+              <option value="Other" ${!['Restaurant', 'Rental', 'Nightclub', 'Ecommerce'].includes(item.category) ? 'selected' : ''}>Autre</option>
+            </select>
           </div>
+
+          <div class="field-group">
+            <label>URL Directe de l'Image (Aperçu)</label>
+            <div class="url-input-container">
+              <input type="text" value="${esc(item.image || (item.images && item.images[0]) || '')}" placeholder="https://images.unsplash.com/..." onchange="window.gallery[${i}].image=this.value; renderGallery(); autoSave()">
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>Lien du projet (Demo Live)</label>
+            <input type="text" value="${esc(item.link)}" placeholder="https://votre-demo.com" onchange="window.gallery[${i}].link=this.value; autoSave()">
+          </div>
+
+          <div class="upload-area" style="margin: 10px 0; padding: 15px;">
+            <label style="font-size: 0.75rem;">Ou Télécharger une Image</label>
+            <div class="file-input-wrapper">
+              <button class="btn btn-outline" style="padding: 6px 12px; font-size: 0.8rem;">📁 Choisir</button>
+              <input type="file" accept="image/*" onchange="handleImageUpload(${i}, this)">
+            </div>
+          </div>
+        </div>
+
+        <div class="project-card-footer">
+          <div class="card-actions-mini">
+             <button class="btn btn-delete" style="padding: 8px 12px;" onclick="window.removeProject(${i})">Supprimer le Projet</button>
+          </div>
+          <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 600;">ID #${i + 1}</div>
         </div>
       </div>
     `;
     }).join('');
-
-    galleryContainer.querySelectorAll('.remove-gal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        window.gallery.splice(btn.dataset.i, 1);
-        renderGallery();
-        autoSave('Projet supprimé avec succès !');
-      });
-    });
   }
+
+  window.removeProject = function (idx) {
+    if (confirm('Supprimer ce projet ?')) {
+      window.gallery.splice(idx, 1);
+      renderGallery();
+      autoSave('Projet supprimé !');
+    }
+  };
 
   window.handleImageUpload = async function (projIdx, input) {
     const files = Array.from(input.files);
@@ -322,6 +339,8 @@ document.addEventListener('DOMContentLoaded', async () => {
           const { url } = await res.json();
           if (!window.gallery[projIdx].images) window.gallery[projIdx].images = [];
           window.gallery[projIdx].images.push(url);
+          // Also set the primary 'image' property for the new visual card logic
+          window.gallery[projIdx].image = url;
         }
       } catch (e) { console.error('Upload failed', e); }
     }
@@ -336,11 +355,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   };
 
   function addGalleryAction() {
-    window.gallery.push({ title: 'Nouveau Projet', category: 'Web', link: '', images: [] });
+    window.gallery.push({ title: 'Nouveau Projet', category: 'Restaurant', link: '', image: '', images: [] });
     renderGallery();
     autoSave('Nouveau Projet ajouté !');
     setTimeout(() => {
-      const items = document.querySelectorAll('.project-item');
+      const items = document.querySelectorAll('.project-card-admin');
       if (items.length) items[items.length - 1].scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, 100);
   }
