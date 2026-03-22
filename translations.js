@@ -42,10 +42,18 @@ const translations = {
         choose_plan: "Choose Plan",
         start_free: "Start Free",
         slide_plans: "Slide to see all plans",
+        step_prefix: "Step",
 
         // Common
         contact_us: "Contact Us",
-        how_it_works: "How It Works"
+        how_it_works: "How It Works",
+        hiw_subtitle: "A simple, streamlined process to push your business forward.",
+        step1_title: "We build your solution",
+        step1_desc: "System/interface design tailored to your exact business needs.",
+        step2_title: "You launch your business online",
+        step2_desc: "Your premium website goes live and your phone screen lights up with activity.",
+        step3_title: "Clients order & contact you easily",
+        step3_desc: "Interact with structured WhatsApp messages instantly and close deals fast."
     },
     fr: {
         // Navigation
@@ -90,10 +98,18 @@ const translations = {
         choose_plan: "Choisir le Plan",
         start_free: "Commencer Gratuitement",
         slide_plans: "Glissez pour voir tous les plans",
+        step_prefix: "Étape",
 
         // Common
         contact_us: "Contactez-nous",
-        how_it_works: "Comment ça marche"
+        how_it_works: "Comment ça marche",
+        hiw_subtitle: "Un processus simple et rationalisé pour propulser votre entreprise.",
+        step1_title: "Nous construisons votre solution",
+        step1_desc: "Conception de système/interface adaptée aux besoins exacts de votre entreprise.",
+        step2_title: "Vous lancez votre entreprise en ligne",
+        step2_desc: "Votre site web premium est mis en ligne et votre téléphone s'illumine d'activité.",
+        step3_title: "Les clients commandent et vous contactent facilement",
+        step3_desc: "Interagissez instantanément avec des messages WhatsApp structurés et concluez des affaires rapidement."
     },
     ar: {
         // Navigation
@@ -138,10 +154,18 @@ const translations = {
         choose_plan: "اختر الخطة",
         start_free: "ابدأ مجاناً",
         slide_plans: "اسحب لرؤية جميع الخطط",
+        step_prefix: "الخطوة",
 
         // Common
         contact_us: "اتصل بنا",
-        how_it_works: "كيف نـعمل"
+        how_it_works: "كيف نـعمل",
+        hiw_subtitle: "عملية بسيطة ومنظمة لدفع عملك نحو الأمام.",
+        step1_title: "نحن نبني حلك الرقمي",
+        step1_desc: "تصميم النظام والواجهة بما يتناسب مع احتياجات عملك بدقة.",
+        step2_title: "أطلق عملك عبر الإنترنت",
+        step2_desc: "ينطلق موقعك الإلكتروني المتميز وتبدأ الشاشة بالنبض بالنشاط.",
+        step3_title: "العملاء يطلبون ويتواصلون معك بسهولة",
+        step3_desc: "تفاعل مع رسائل واتساب المنظمة فوراً وأغلق الصفقات بسرعة."
     }
 };
 
