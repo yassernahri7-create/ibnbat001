@@ -1,6 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
+const zlib = require("zlib");
 
 const parsedPort = Number.parseInt(process.env.PORT || "", 10);
 const isValidPort = Number.isInteger(parsedPort) && parsedPort > 0 && parsedPort <= 65535;
@@ -221,8 +222,35 @@ const server = http.createServer((req, res) => {
       return;
     }
     const ext = path.extname(filePath).toLowerCase();
-    res.writeHead(200, { "Content-Type": mime[ext] || "application/octet-stream" });
-    fs.createReadStream(filePath).pipe(res);
+    const contentType = mime[ext] || "application/octet-stream";
+    const acceptEncoding = req.headers["accept-encoding"] || "";
+
+    // Smart Caching Logic
+    let cacheControl = "no-cache, no-store, must-revalidate"; // Default: No cache for HTML/Config
+
+    // Long-term cache for versioned files or static assets
+    const isVersioned = req.url.includes("?v=");
+    const isAsset = urlPath.startsWith("/assets/");
+    if (isVersioned || isAsset) {
+      cacheControl = "public, max-age=31536000, immutable";
+    }
+
+    const headers = {
+      "Content-Type": contentType,
+      "Cache-Control": cacheControl
+    };
+
+    // Gzip Compression for text-based assets
+    const shouldCompress = contentType.includes("text") || contentType.includes("json") || contentType.includes("javascript") || contentType.includes("svg");
+
+    if (shouldCompress && acceptEncoding.includes("gzip")) {
+      res.writeHead(200, { ...headers, "Content-Encoding": "gzip" });
+      const gzip = zlib.createGzip();
+      fs.createReadStream(filePath).pipe(gzip).pipe(res);
+    } else {
+      res.writeHead(200, headers);
+      fs.createReadStream(filePath).pipe(res);
+    }
   });
 });
 

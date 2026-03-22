@@ -7,7 +7,10 @@
   <title>Ibn Batouta Web | Premium Digital Agency</title>
   <meta name="description"
     content="We provide smart digital solutions for businesses to help them automate operations and increase sales.">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" href="styles.css?v=3" as="style">
+  <link rel="stylesheet" href="styles.css?v=3">
 </head>
 
 <body id="top">
@@ -243,7 +246,7 @@
           <div class="portfolio-card scroll-anim scroll-slide-up is-visible" style="transition-delay: 0.1s;"
             onclick="openPortfolioModal('Premium Car Hire', 'Rental', 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=80', '#')">
             <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=80"
-              alt="Car Rental" class="portfolio-img">
+              alt="Car Rental" class="portfolio-img" loading="lazy">
             <div class="portfolio-content" style="pointer-events: none;">
               <h4>Premium Car Hire</h4>
               <p>Rental</p>
