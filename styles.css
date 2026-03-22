@@ -1988,11 +1988,11 @@ ul {
     display: flex !important;
     overflow-x: auto !important;
     scroll-snap-type: x mandatory;
-    gap: 1rem;
-    padding: 0.5rem 5% 2rem;
+    gap: 1.25rem;
+    padding: 1rem 1.5rem 3rem;
     scrollbar-width: none;
     -ms-overflow-style: none;
-    margin-top: 0.5rem;
+    margin-top: 1rem;
   }
 
   .pricing-grid::-webkit-scrollbar {
@@ -2000,22 +2000,24 @@ ul {
   }
 
   .pricing-card {
-    min-width: 72%;
-    /* User request: narrower cards to look like boxes */
+    min-width: 88%;
+    /* Increased for better text fitting */
     scroll-snap-align: center;
     flex-shrink: 0;
-    padding: 1.25rem;
-    background: rgba(15, 23, 42, 0.4);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 2rem 1.5rem;
+    background: rgba(15, 23, 42, 0.5);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
 
   .plan-name {
-    font-size: 0.95rem;
+    font-size: 1.2rem;
+    font-weight: 700;
   }
 
   .plan-price {
-    font-size: 1.25rem;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
   }
 
   .plan-price span {
@@ -2023,8 +2025,9 @@ ul {
   }
 
   .plan-features li {
-    font-size: 0.85rem;
-    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
   }
 
   .pricing-slider-indicator {
