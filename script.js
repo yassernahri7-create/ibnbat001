@@ -109,6 +109,10 @@ function renderPricing(services) {
     const priceNumMatches = rawPrice.match(/\d+[.,]?\d*/);
     const priceDisplay = priceNumMatches ? `DH ${priceNumMatches[0]}` : rawPrice;
 
+    // Highlight the second (middle) card
+    const isHighlighted = i === 1;
+    const features = Array.isArray(langData.features) ? langData.features : [];
+
     return `
       <div class="pricing-card interactive-card scroll-anim scroll-slide-up ${isHighlighted ? 'highlighted' : ''} is-visible observed" style="transition-delay: ${0.1 * (i + 1)}s;">
         <div class="plan-name">${rawName}</div>
@@ -141,7 +145,7 @@ function renderPortfolio(projects) {
       // Escape single quotes for the inline onclick handler
       const safeTitle = (p.title || '').replace(/'/g, "\\'");
       const safeCat = (p.category || '').replace(/'/g, "\\'");
-      const safeImg = (p.images?.[0] || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80').replace(/'/g, "\\'");
+      const safeImg = (p.image || p.images?.[0] || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=600&q=80').replace(/'/g, "\\'");
       const safeLink = (p.link || '#').replace(/'/g, "\\'");
 
       return `
