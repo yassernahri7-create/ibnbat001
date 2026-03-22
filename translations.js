@@ -31,8 +31,8 @@ const translations = {
 
         // Pricing
         pricing_title: "Simple, Transparent Pricing",
-        yearly_plan: "Yearly Plan",
-        monthly_plan: "Monthly Plan",
+        super_plan: "Super Plan",
+        monthly_plan: "Monthly Pack",
         free_trial: "Free Trial",
         best_value: "Best Value",
         dh_year: "DH / year",
@@ -87,8 +87,8 @@ const translations = {
 
         // Pricing
         pricing_title: "Tarification Simple et Transparente",
-        yearly_plan: "Plan Annuel",
-        monthly_plan: "Plan Mensuel",
+        super_plan: "Super Plan",
+        monthly_plan: "Pack Mensuel",
         free_trial: "Essai Gratuit",
         best_value: "Meilleure Valeur",
         dh_year: "DH / an",
@@ -143,8 +143,8 @@ const translations = {
 
         // Pricing
         pricing_title: "أسعار بسيطة وشفافة",
-        yearly_plan: "الخطة السنوية",
-        monthly_plan: "الخطة الشهرية",
+        super_plan: "سوبر بلان",
+        monthly_plan: "الباقة الشهرية",
         free_trial: "تجربة مجانية",
         best_value: "أفضل قيمة",
         dh_year: "درهم / سنة",

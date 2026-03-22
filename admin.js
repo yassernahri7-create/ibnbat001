@@ -5,9 +5,9 @@ const STORAGE_KEY = 'IbnBatoutaWeb_admin_only_v1';
 // Same default as the frontend to hydrate if empty
 const DEFAULT_SERVICES = [
   {
-    fr: { title: '🌐 Site Web Pro — 999 DH', desc: 'Votre vitrine digitale clé en main.', features: 'Design sur-mesure\nResponsive\nWhatsApp intégré', stat: '75% des clients...' },
-    en: { title: '🌐 Professional Website — 999 DH', desc: 'Your turnkey digital showcase.', features: 'Custom Design\nResponsive\nWhatsApp integrated', stat: '75% of clients...' },
-    ar: { title: '🌐 موقع احترافي — 999 درهم', desc: 'واجهتك الرقمية بلمسة واحدة.', features: 'تصميم مخصص\nمتجاوب\nواتساب مدمج', stat: '75% من العملاء...' }
+    fr: { title: 'Super Plan — 1600 DH', desc: 'La solution complète tout-en-un.', features: '3 Langues (AR/EN/FR)\nAdmin Panel\nHébergement 1 An\nAssistance 24/7', stat: '' },
+    en: { title: 'Super Plan — 1600 DH', desc: 'The all-in-one complete solution.', features: '3 Languages (AR/EN/FR)\nAdmin Panel\n1 Year Hosting\n24/7 Assistance', stat: '' },
+    ar: { title: 'سوبر بلان — 1600 درهم', desc: 'الحل الشامل والكامل.', features: '3 لغات (AR/EN/FR)\nلوحة التحكم\nاستضافة لمدة سنة\nدعم فني 24/7', stat: '' }
   }
 ];
 
