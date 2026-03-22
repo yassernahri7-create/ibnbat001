@@ -182,7 +182,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       return `
       <div class="service-item">
-        <h3 style="margin-bottom:16px;">Plan / Pack #${i + 1}</h3>
+        <h3 style="margin-bottom:16px; display:flex; justify-content:space-between; align-items:center;">
+          <span>Plan / Pack #${i + 1}</span>
+          <button class="btn" style="background:var(--danger); color:white; padding:4px 10px; font-size:12px; border:none; border-radius:4px; cursor:pointer;" onclick="if(confirm('Delete this plan?')) deletePackAction(${i})">Delete</button>
+        </h3>
         
         <div class="lang-tabs" id="tabGroup_${i}">
           <button class="l-tab active" onclick="switchPackLang(${i}, 'fr')">Français</button>
@@ -250,6 +253,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 
   document.getElementById('addPackBtn').addEventListener('click', addPackAction);
+
+  window.deletePackAction = function (idx) {
+    window.packs.splice(idx, 1);
+    renderPacks();
+    autoSave('Plan deleted and saved!');
+  };
   document.getElementById('sideAddBtn').addEventListener('click', addPackAction);
   renderPacks();
 
