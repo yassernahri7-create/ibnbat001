@@ -5,9 +5,19 @@ const STORAGE_KEY = 'IbnBatoutaWeb_admin_only_v1';
 // Same default as the frontend to hydrate if empty
 const DEFAULT_SERVICES = [
   {
-    fr: { title: 'Super Plan — 1600 DH', desc: 'La solution complète tout-en-un.', features: '3 Langues (AR/EN/FR)\nAdmin Panel\nHébergement 1 An\nAssistance 24/7', stat: '' },
-    en: { title: 'Super Plan — 1600 DH', desc: 'The all-in-one complete solution.', features: '3 Languages (AR/EN/FR)\nAdmin Panel\n1 Year Hosting\n24/7 Assistance', stat: '' },
-    ar: { title: 'سوبر بلان — 1600 درهم', desc: 'الحل الشامل والكامل.', features: '3 لغات (AR/EN/FR)\nلوحة التحكم\nاستضافة لمدة سنة\nدعم فني 24/7', stat: '' }
+    fr: { title: "Essai Gratuit — 0 DH", desc: "Testez le système complet sans risque avant de vous engager.", features: "3 Langues Incluses (AR/EN/FR)\nPanel d'Administration Complet\nHébergement Cloud 1 An Offert\nAssistance Tech 24/7 VIP\nDesign Premium Responsive\nIntégration WhatsApp Direct" },
+    en: { title: "Free Trial — 0 DH", desc: "Experience the full system risk-free before you commit.", features: "3 Languages Included (AR/EN/FR)\nFull Dynamic Admin Panel\n1 Year Cloud Hosting Included\n24/7 Technical VIP Assistance\nPremium Responsive Design\nDirect WhatsApp Integration" },
+    ar: { title: "تجربة مجانية — 0 درهم", desc: "جرب النظام الكامل بدون مخاطر قبل الالتزام.", features: "3 لغات متضمنة (AR/EN/FR)\nلوحة تحكم ديناميكية كاملة\nاستضافة سحابية لمدة سنة مجاناً\nدعم فني VIP على مدار الساعة\nتصميم مميز ومتجاوب\nدمج مباشر لتطبيق WhatsApp" }
+  },
+  {
+    fr: { title: "Super Plan — 1600 DH", desc: "La solution complète tout-en-un pour une année de succès.", features: "3 Langues Incluses (AR/EN/FR)\nPanel d'Administration Complet\nHébergement Cloud 1 An Offert\nAssistance Tech 24/7 VIP\nDesign Premium Responsive\nOptimisation SEO & Google\nIntégration WhatsApp Direct" },
+    en: { title: "Super Plan — 1600 DH", desc: "The all-in-one complete solution for a year of success.", features: "3 Languages Included (AR/EN/FR)\nFull Dynamic Admin Panel\n1 Year Cloud Hosting Included\n24/7 Technical VIP Assistance\nPremium Responsive Design\nSEO & Google Optimization\nDirect WhatsApp Integration" },
+    ar: { title: "سوبر بلان — 1600 درهم", desc: "الحل الشامل والكامل لسنة من النجاح.", features: "3 لغات متضمنة (AR/EN/FR)\nلوحة تحكم ديناميكية كاملة\nاستضافة سحابية لمدة سنة مجاناً\nدعم فني VIP على مدار الساعة\nتصميم مميز ومتجاوب\nتحسين محركات البحث SEO\nدمج مباشر لتطبيق WhatsApp" }
+  },
+  {
+    fr: { title: "Pack Mensuel — 200 DH", desc: "Liberté totale avec un paiement mensuel flexible.", features: "3 Langues Incluses (AR/EN/FR)\nPanel d'Administration Complet\nHébergement Cloud Inclus\nAssistance Tech 24/7 VIP\nDesign Premium Responsive\nIntégration WhatsApp Direct" },
+    en: { title: "Monthly Pack — 200 DH", desc: "Total freedom with a flexible monthly payment.", features: "3 Languages Included (AR/EN/FR)\nFull Dynamic Admin Panel\nCloud Hosting Included\n24/7 Technical VIP Assistance\nPremium Responsive Design\nDirect WhatsApp Integration" },
+    ar: { title: "الباقة الشهرية — 200 درهم", desc: "حرية تامة مع دفع شهري مرن.", features: "3 لغات متضمنة (AR/EN/FR)\nلوحة تحكم ديناميكية كاملة\nاستضافة سحابية متضمنة\nدعم فني VIP على مدار الساعة\nتصميم مميز ومتجاوب\nدمج مباشر لتطبيق WhatsApp" }
   }
 ];
 

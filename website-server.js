@@ -94,9 +94,30 @@ function readConfigObject() {
     const raw = fs.readFileSync(configPath, "utf8");
     const parsed = JSON.parse(raw || "{}");
 
-    // Auto-heal legacy 5 plans issue by truncating to exactly 3 plans
-    if (parsed.services && parsed.services.length === 5) {
-      parsed.services = parsed.services.slice(0, 3);
+    // Auto-heal legacy plans: If we have 5 plans, or if branding is old (Yearly Plan), reset to the 3 new Super bundles
+    const isLegacy = (parsed.services && parsed.services.length === 5) ||
+      (parsed.services && parsed.services[1] && parsed.services[1].en && parsed.services[1].en.title && parsed.services[1].en.title.includes("Yearly Plan"));
+
+    if (isLegacy) {
+      console.log("Auto-healing legacy config to Super Plan 3-pack...");
+      const newServices = [
+        {
+          fr: { title: "Essai Gratuit — 0 DH", desc: "Testez le système complet sans risque avant de vous engager.", features: ["3 Langues Incluses (AR/EN/FR)", "Panel d'Administration Complet", "Hébergement Cloud 1 An Offert", "Assistance Tech 24/7 VIP", "Design Premium Responsive", "Intégration WhatsApp Direct"] },
+          en: { title: "Free Trial — 0 DH", desc: "Experience the full system risk-free before you commit.", features: ["3 Languages Included (AR/EN/FR)", "Full Dynamic Admin Panel", "1 Year Cloud Hosting Included", "24/7 Technical VIP Assistance", "Premium Responsive Design", "Direct WhatsApp Integration"] },
+          ar: { title: "تجربة مجانية — 0 درهم", desc: "جرب النظام الكامل بدون مخاطر قبل الالتزام.", features: ["3 لغات متضمنة (AR/EN/FR)", "لوحة تحكم ديناميكية كاملة", "استضافة سحابية لمدة سنة مجاناً", "دعم فني VIP على مدار الساعة", "تصميم مميز ومتجاوب", "دمج مباشر لتطبيق WhatsApp"] }
+        },
+        {
+          fr: { title: "Super Plan — 1600 DH", desc: "La solution complète tout-en-un pour une année de succès.", features: ["3 Langues Incluses (AR/EN/FR)", "Panel d'Administration Complet", "Hébergement Cloud 1 An Offert", "Assistance Tech 24/7 VIP", "Design Premium Responsive", "Optimisation SEO & Google", "Intégration WhatsApp Direct"] },
+          en: { title: "Super Plan — 1600 DH", desc: "The all-in-one complete solution for a year of success.", features: ["3 Languages Included (AR/EN/FR)", "Full Dynamic Admin Panel", "1 Year Cloud Hosting Included", "24/7 Technical VIP Assistance", "Premium Responsive Design", "SEO & Google Optimization", "Direct WhatsApp Integration"] },
+          ar: { title: "سوبر بلان — 1600 درهم", desc: "الحل الشامل والكامل لسنة من النجاح.", features: ["3 لغات متضمنة (AR/EN/FR)", "لوحة تحكم ديناميكية كاملة", "استضافة سحابية لمدة سنة مجاناً", "دعم فني VIP على مدار الساعة", "تصميم مميز ومتجاوب", "تحسين محركات البحث SEO", "دمج مباشر لتطبيق WhatsApp"] }
+        },
+        {
+          fr: { title: "Pack Mensuel — 200 DH", desc: "Liberté totale avec un paiement mensuel flexible.", features: ["3 Langues Incluses (AR/EN/FR)", "Panel d'Administration Complet", "Hébergement Cloud Inclus", "Assistance Tech 24/7 VIP", "Design Premium Responsive", "Intégration WhatsApp Direct"] },
+          en: { title: "Monthly Pack — 200 DH", desc: "Total freedom with a flexible monthly payment.", features: ["3 Languages Included (AR/EN/FR)", "Full Dynamic Admin Panel", "Cloud Hosting Included", "24/7 Technical VIP Assistance", "Premium Responsive Design", "Direct WhatsApp Integration"] },
+          ar: { title: "الباقة الشهرية — 200 درهم", desc: "حرية تامة مع دفع شهري مرن.", features: ["3 لغات متضمنة (AR/EN/FR)", "لوحة تحكم ديناميكية كاملة", "استضافة سحابية متضمنة", "دعم فني VIP على مدار الساعة", "تصميم مميز ومتجاوب", "دمج مباشر لتطبيق WhatsApp"] }
+        }
+      ];
+      parsed.services = newServices;
       try { fs.writeFileSync(configPath, JSON.stringify(parsed, null, 2), "utf8"); } catch (e) { }
     }
     if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
