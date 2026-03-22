@@ -93,6 +93,12 @@ function readConfigObject() {
   try {
     const raw = fs.readFileSync(configPath, "utf8");
     const parsed = JSON.parse(raw || "{}");
+
+    // Auto-heal legacy 5 plans issue by truncating to exactly 3 plans
+    if (parsed.services && parsed.services.length === 5) {
+      parsed.services = parsed.services.slice(0, 3);
+      try { fs.writeFileSync(configPath, JSON.stringify(parsed, null, 2), "utf8"); } catch (e) { }
+    }
     if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
       return parsed;
     }
